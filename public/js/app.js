@@ -1,4 +1,10 @@
 class Header extends React.Component {
+
+  logoutUser(){
+
+    console.log("logout clicked");
+    window.location='/api/user/logout'
+  }
     render() {
         if (this.props.user.loggedin) {
             return <div className="row" id="header">
@@ -11,10 +17,12 @@ class Header extends React.Component {
                 <div className="col-10" id="header-website-info">
                     <h1>LIS NEPAL</h1>
                     <h1 className="text-capitalize text-right h1" id="  header-website-text">Interview Assistant</h1>
+                    <a href="#" onClick={this.logoutUser} >
                     <div className="text-danger" id="option-logout">
                         Logout &nbsp;
                         <i className="fa fa-eject"></i>
                     </div>
+                    </a>
                 </div>
             </div>
         }

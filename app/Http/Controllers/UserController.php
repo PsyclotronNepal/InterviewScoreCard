@@ -11,7 +11,11 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return ["success" => True];
+        $request->session()->flush();
+        $request->session()->regenerate();
+
+        return redirect('/');
+        //return ["success" => True];
     }
 
     public function loginUser(Request $request)

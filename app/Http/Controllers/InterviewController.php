@@ -56,8 +56,23 @@ class InterviewController extends Controller
         return $request;
     }
 
+    function createInterview(Request $request)
+    {
+      $user=Auth::user();
+      if($user->isAdmin()){
+        // TODO: Code to create interview with given request
+
+      }elseif ($user->isInterviewer()) {
+        return ['error'=>true,'message'=>'You cannot create new interview'];
+      }
+      else {
+        //redirect to home page or show error
+      }
+
+    }
     function openInterview()
     {
+
     }
 
     function editInterview()

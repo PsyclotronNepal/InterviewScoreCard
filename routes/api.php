@@ -38,7 +38,7 @@ Route::prefix('interview')->group(function () {
     // In: null
     // Out: id:new_id
     //      success (true/false)
-    Route::get('/create', 'InterviewController@testme');
+    Route::get('/create', 'InterviewController@createInterview');
 
 
     // interview/{interview_id}/edit
