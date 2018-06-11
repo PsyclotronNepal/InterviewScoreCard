@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 25 May 2018 08:05:10 +0000.
+ * Date: Sat, 02 Jun 2018 17:36:40 +0000.
  */
 
 namespace App\Models;
@@ -18,7 +18,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * 
  * @property \App\Models\EvaluationCriterium $evaluation_criterium
  * @property \App\Models\Interview $interview
- * @property \App\Models\Interviewer $interviewer
+ * @property \App\Models\User $user
  *
  * @package App\Models
  */
@@ -34,6 +34,12 @@ class InterviewerHasInterview extends Eloquent
 		'evaluation_id' => 'int'
 	];
 
+    protected $fillable = [
+        'interviewer_id',
+        'interview_id',
+        'evaluation_id'
+    ];
+
 	public function evaluation_criterium()
 	{
 		return $this->belongsTo(\App\Models\EvaluationCriterium::class, 'evaluation_id');
@@ -44,8 +50,8 @@ class InterviewerHasInterview extends Eloquent
 		return $this->belongsTo(\App\Models\Interview::class);
 	}
 
-	public function interviewer()
-	{
-		return $this->belongsTo(\App\Models\Interviewer::class);
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'interviewer_id');
 	}
 }

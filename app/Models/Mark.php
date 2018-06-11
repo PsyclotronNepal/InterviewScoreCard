@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 25 May 2018 08:05:10 +0000.
+ * Date: Sat, 02 Jun 2018 17:36:40 +0000.
  */
 
 namespace App\Models;
@@ -11,15 +11,15 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class Mark
- * 
- * @property int $rating_id
+ *
+ * @property int $id
  * @property float $score
  * @property string $remarks
  * @property int $interviewee_id
  * @property int $interviewer_id
  * 
  * @property \App\Models\Interviewee $interviewee
- * @property \App\Models\Interviewer $interviewer
+ * @property \App\Models\User $user
  *
  * @package App\Models
  */
@@ -35,7 +35,9 @@ class Mark extends Eloquent
 
 	protected $fillable = [
 		'score',
-		'remarks'
+        'remarks',
+        'interviewee_id',
+        'interviewer_id'
 	];
 
 	public function interviewee()
@@ -43,8 +45,8 @@ class Mark extends Eloquent
 		return $this->belongsTo(\App\Models\Interviewee::class);
 	}
 
-	public function interviewer()
-	{
-		return $this->belongsTo(\App\Models\Interviewer::class);
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'interviewer_id');
 	}
 }

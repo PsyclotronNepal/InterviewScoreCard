@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 25 May 2018 08:05:10 +0000.
+ * Date: Sat, 02 Jun 2018 17:36:40 +0000.
  */
 
 namespace App\Models;
@@ -11,21 +11,20 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class EvaluationCriterium
- * 
- * @property int $evaluation_id
+ *
+ * @property int $id
  * @property string $title
  * @property string $weight
  * @property string $remarks
  * @property int $interview_id
  * 
  * @property \App\Models\Interview $interview
- * @property \Illuminate\Database\Eloquent\Collection $interviewer_has_interviews
+ * @property \App\Models\InterviewerHasInterview $interviewer_has_interview
  *
  * @package App\Models
  */
 class EvaluationCriterium extends Eloquent
 {
-	protected $primaryKey = 'evaluation_id';
 	public $timestamps = false;
 
 	protected $casts = [
@@ -44,8 +43,8 @@ class EvaluationCriterium extends Eloquent
 		return $this->belongsTo(\App\Models\Interview::class);
 	}
 
-	public function interviewer_has_interviews()
-	{
-		return $this->hasMany(\App\Models\InterviewerHasInterview::class, 'evaluation_id');
+    public function interviewer_has_interview()
+    {
+        return $this->hasOne(\App\Models\InterviewerHasInterview::class, 'evaluation_id');
 	}
 }

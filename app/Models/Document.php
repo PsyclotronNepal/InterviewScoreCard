@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 25 May 2018 08:05:10 +0000.
+ * Date: Sat, 02 Jun 2018 17:36:40 +0000.
  */
 
 namespace App\Models;
@@ -11,10 +11,10 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class Document
- * 
- * @property int $doc_id
- * @property string $doc_name
- * @property string $doc_location
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $location
  * @property int $interviewee_id
  * 
  * @property \App\Models\Interviewee $interviewee
@@ -30,8 +30,9 @@ class Document extends Eloquent
 	];
 
 	protected $fillable = [
-		'doc_name',
-		'doc_location'
+        'name',
+        'location',
+        'interviewee_id'
 	];
 
 	public function interviewee()

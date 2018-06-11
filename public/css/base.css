@@ -32,11 +32,18 @@ html {
     padding:0;
     margin:0;
 }
-
+#react-content{
+    padding:0!important;
+}
 html, body, p, div, span, form {
     text-decoration-color: #00948B;
     color:#00948B;
     font-size: 12px;
+}
+
+div{
+    padding:0;
+    margin:0;
 }
 
 body {
@@ -169,7 +176,7 @@ border-bottom: none;
 
 #option-logout{
     position:absolute;
-    bottom:10px;
+    top:10px;
     right:50px;
 }
 /************************ ****************************************
@@ -281,18 +288,20 @@ border-bottom: none;
 /***************************************************************
     Main Content In the body.
 *****************************************************************/
+.toast-message{
 
+}
 
 #content-header{
     padding-right:30px;
-    padding-left:20px;
+    padding-left:0!important;
 }
 #header-separtion-line{
     margin-top: 10px;
     margin-bottom:5px;
     border-width:2px;
     border-color: #00948B;
-    width: 100%;
+    width: 98%;
 }
 
 .fa-times-circle{
@@ -313,3 +322,15 @@ border-bottom: none;
     padding-left:30px;
 }
 
+.toast{
+    font-size:large;
+    color:white;!important;
+}
+.toast-message{
+    font-size: large;
+    color:white;!important;
+}
+.toast-title{
+    font-size:medium;
+    color:white;!important;
+}
