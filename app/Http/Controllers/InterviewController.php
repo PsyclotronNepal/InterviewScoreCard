@@ -65,8 +65,6 @@ class InterviewController extends Controller
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
     }
 
-
-    }
     function editInterview(Request $request)
     {
         if(Auth::user()->isAdmin()){

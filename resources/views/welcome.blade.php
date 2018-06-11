@@ -2,10 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Hello World</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <title>Interview</title>
+    {{-- <script src="https://unpkg.com/react@16/umd/react.development.js"></script> --}}
+    {{-- <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> --}}
+    {{-- <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script> --}}
+
+    {{Html::script('js/react/babel.min.js'),array('type'=>'text/javascript')}}
+    {{Html::script('js/react/react.development.js'),array('type'=>'text/javascript')}}
+    {{Html::script('js/react/react-dom.development.js'),array('type'=>'text/javascript')}}
 
     {{ Html::style('font-awesome/css/fontawesome-all.min.css') }}
     {{ Html::style('bootstrap/css/bootstrap.min.css') }}
