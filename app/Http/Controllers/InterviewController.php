@@ -72,7 +72,15 @@ class InterviewController extends Controller
     }
     function openInterview()
     {
+      $user=Auth::user();
+      if($user->isAdmin()){
+        // TODO: Code to open clicked interview to edit or to check marks given
 
+      }elseif ($user->isInterviewer()) {
+        // TODO: Code to open clicked interview with list of interviewee to give marks to them
+        //
+        //return ['error'=>true,'message'=>'You cannot create new interview'];
+      }
     }
 
     function editInterview()

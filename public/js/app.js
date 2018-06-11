@@ -29,8 +29,9 @@ class Header extends React.Component {
         else {
             return <div className="row" id="header">
                 <div className="col-12" id="header-website-info">
-                    <h1>LIS NEPAL</h1>
-                    <h1 className="text-capitalize text-right h1" id="  header-website-text">Interview Assistant</h1>
+
+                    <img className='logoimage' src='/images/lis logo.gif'/>
+                    <h1 className="text-capitalize text-right h1" id="header-website-text">Interview Assistant</h1>
                 </div>
             </div>
         }
