@@ -56,13 +56,14 @@ class InterviewController extends Controller
 
     function createInterview(Request $request)
     {
-        if(Auth::user()->isAdmin()){
-            $i=new Interview();
+        if (Auth::user()->isAdmin()) {
+            $i = new Interview();
             $i->save();
-            $i->error=false;
+            $i->error = false;
             return $i;
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
+    }
 
 
     }
@@ -116,7 +117,6 @@ class InterviewController extends Controller
             return ['error' => false];
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
-
     }
 
     function assignEvaluationCriteria()
@@ -125,6 +125,5 @@ class InterviewController extends Controller
             return ['error' => false];
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
-
     }
 }
