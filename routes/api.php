@@ -38,31 +38,36 @@ Route::prefix('interview')->group(function () {
     // In: null
     // Out: id:new_id
     //      success (true/false)
-    Route::get('/create', 'InterviewController@testme');
+    Route::post('/create', 'InterviewController@testme');
 
 
     // interview/{interview_id}/edit
-    // In: field_name: value
+    // In: field_name : (title,date,location) -> one of these 3
+    //    value  : the value to update with.
     // Out: success (true/false)
-    Route::get('/{interview_id}/edit', 'InterviewController@testme');
+    Route::post('/{interview_id}/edit', 'InterviewController@editInterview');
 
     // interview/{interview_id}/interview_criteria/create
     // In: null
     // Out: Success (true/false)
     // id
-    Route::get('/{interview_id}/interview_criteria/create', 'InterviewController@testme');
+
+    // interview/{interview_id}/
+    Route::get('/{interview_id}/interview_criteria', 'UInterviewController@createEvaluationCriteria');
+
+    Route::post('/{interview_id}/interview_criteria/create', 'InterviewController@testme');
 
     // interview/{interview_id}/interview_criteria/edit
     // In: id
     // field_name: value
     // Out: success (true/false)
-    Route::get('/{interview_id}/interview_criteria/edit', 'InterviewController@testme');
+    Route::post('/{interview_id}/interview_criteria/edit', 'InterviewController@testme');
 
     // interview/{interview_id}/interviewer/add/
     // In:
     // idOut:
     // Success (true/false)
-    Route::get('/{interview_id}/interviewer/add', 'InterviewController@testme');
+    Route::post('/{interview_id}/interviewer/add', 'InterviewController@testme');
 
     // interview/{interview_id}/interviewer/evaluation_criteria
     // In: interviewer_id
@@ -75,45 +80,49 @@ Route::prefix('interview')->group(function () {
     // Out: Success (true/false)
     //      Id
     Route::get('/{interview_id}/interviewee/create', 'InterviewController@testme');
+
+
+    /*
+    * [Routes list for interviewee]
+    * Contains all routes that are to be included in interviewee section
+    * The creation of interviewee assigns it to a interview. so we need not implicitly give the interview id parameter.
+    */
+    Route::prefix('interviewee')->group(function () {
+
+        Route::get('/',"IntervieweeController@getInterviewee");
+
+        // interview/{interview_id}/interviewee/create
+        Route::post('/create','IntervieweeController@createInterviewee');
+
+        // interview/{interview_id}/interviewee/{id}/edit
+        // In: field_name: value
+        // Out: Success (true/false)
+        Route::get('/{interviewee_id}/edit', 'InterviewController@testme');
+
+        // interview/{interview_id}/interviewee/{id}/qualification/create
+        // In: null
+        // Out: Success (true/false)
+        // Id
+        Route::get('/{interviewee_id}/qualification/create', 'InterviewController@testme');
+
+        // interview/{interview_id}/interviewee/{id}/qualification/edit
+        // In: id
+        // field_name: value
+        // Out: Success (true/false)
+        Route::get('/{interviewee_id}/qualification/edit', 'InterviewController@testme');
+
+        // interview/{interview_id}/interviewee/{id}/documents/create
+        // In: document_type
+        // Out: Success (true/false)
+        // id
+        Route::get('/{interviewee_id}/documents/create', 'InterviewController@testme');
+
+        //   interview/{id}/interviewee/{id}/documents/{id}/edit
+        // In: File
+        // Out: Success (true/false)
+        Route::get('/{interviewee_id}/documents/edit', 'InterviewController@testme');
+    });
 });
-
-
-/*
-* [Routes list for interviewee]
-* Contains all routes that are to be included in interviewee section
-* The creation of interviewee assigns it to a interview. so we need not implicitly give the interview id parameter.
-*/
-Route::prefix('interviewee')->group(function () {
-
-    // interview/{interview_id}/interviewee/{id}/edit
-    // In: field_name: value
-    // Out: Success (true/false)
-    Route::get('/{interviewee_id}/edit', 'InterviewController@testme');
-
-    // interview/{interview_id}/interviewee/{id}/qualification/create
-    // In: null
-    // Out: Success (true/false)
-    // Id
-    Route::get('/{interviewee_id}/qualification/create', 'InterviewController@testme');
-
-    // interview/{interview_id}/interviewee/{id}/qualification/edit
-    // In: id
-    // field_name: value
-    // Out: Success (true/false)
-    Route::get('/{interviewee_id}/qualification/edit', 'InterviewController@testme');
-
-    // interview/{interview_id}/interviewee/{id}/documents/create
-    // In: document_type
-    // Out: Success (true/false)
-    // id
-    Route::get('/{interviewee_id}/documents/create', 'InterviewController@testme');
-
-    //   interview/{id}/interviewee/{id}/documents/{id}/edit
-    // In: File
-    // Out: Success (true/false)
-    Route::get('/{interviewee_id}/documents/edit', 'InterviewController@testme');
-});
-
 
 Route::get('/', function () {
     return "home";

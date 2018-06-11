@@ -20,8 +20,6 @@ class InterviewController extends Controller
 
     function getList(Request $request)
     {
-
-
         if ($request->term) {
             return $this->searchInterview($request);
         }
@@ -56,57 +54,77 @@ class InterviewController extends Controller
         return $request;
     }
 
-    function openInterview()
+    function createInterview(Request $request)
     {
-    }
+        if(Auth::user()->isAdmin()){
+            $i=new Interview();
+            $i->save();
+            $i->error=false;
+            return $i;
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
 
-    function editInterview()
-    {
-    }
-
-    function viewResult()
-    {
-    }
-
-    function addInterviewer()
-    {
-    }
-
-    function removeInterviewer()
-    {
-    }
-
-    function editInterviewee()
-    {
-    }
-
-    function createInterviewee()
-    {
 
     }
-
-    function deleteInterviewee()
+    function editInterview(Request $request)
     {
-
+        if(Auth::user()->isAdmin()){
+            $i=Interview::where('id',$request->interview_id)
+                ->update(array($request->field_name => $request->value));
+            if($i){
+                return ['error' => false];
+            }
+            return ['error'=>true,"message"=> "Unexpected error while updating database"];
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
     }
 
+
+
+    function createEvaluationCriteria(Request $request)
+    {
+        if(Auth::user()->isAdmin()){
+            $criteria=new EvaluationCriteria();
+            $criteria->interview_id=$request->interview_id;
+            $criteria.save();
+
+            return ['error' => false];
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
+    }
     function getEvaluationCriteria()
     {
+        if(Auth::user()->isAdmin()){
+            return ['error' => false];
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
 
     }
 
     function editEvaluationCriteria()
     {
+        if(Auth::user()->isAdmin()){
+            return ['error' => false];
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
 
     }
 
     function deleteEvaluationCriteria()
     {
+        if(Auth::user()->isAdmin()){
+            return ['error' => false];
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
 
     }
 
     function assignEvaluationCriteria()
     {
+        if(Auth::user()->isAdmin()){
+            return ['error' => false];
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
 
     }
 }
