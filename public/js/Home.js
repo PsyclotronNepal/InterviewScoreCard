@@ -1,3 +1,7 @@
+function homePage() {
+    return
+}
+
 class Home extends React.Component {
     constructor(props) {
         super(props)
@@ -5,7 +9,7 @@ class Home extends React.Component {
             interviews: []
 
         }
-        this.handleSearch=this.handleSearch.bind(this,)
+        this.handleSearch = this.handleSearch.bind(this,)
 
     }
 
@@ -17,31 +21,36 @@ class Home extends React.Component {
             success: function (result) {
 
                 if (result.error) {
-                    toastr['warning'](" Message: " + result.message,"Interview Fetch Error" );
+                    toastr['warning'](" Message: " + result.message, "Interview Fetch Error");
                 }
-                else{
+                else {
                     home.setState({interviews: result});
                 }
             },
-            error:function(err){
-                toastr['error'](" Message: " + err.responseJSON.message,"Interview Fetch Error [code: " + err.status+"]" );
+            error: function (err) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Interview Fetch Error [code: " + err.status + "]");
             }
         });
     }
 
     render() {
         const interviews = this.state.interviews.data;
-        return <Body>
+        return <Page user={pageUser()}>
+            <Body>
+            <Search onChange={this.handleSearch}/>
+            {$.inArray(pageUser().roles, "admin") ?
+                <InterviewList interviews={interviews}
+                               onClick={this.handleInterviewClick}
+                               onDelete={this.handleInterviewDelete}
+                               $onEdit={this.handleInterviewEdit}
+                               admin/> :
+                <InterviewList interviews={interviews}
+                               onClick={this.handleInterviewClick}
+                />
+            }
 
-        <BodyHeader value="Interviews"/>
-
-        <Search onChange={this.handleSearch}/>
-        {this.props.admin ?
-            <InterviewList interviews={interviews} admin/> :
-            <InterviewList interviews={interviews}/>
-        }
-        
-        </Body>
+            </Body>
+        </Page>
 
     }
 
@@ -50,18 +59,30 @@ class Home extends React.Component {
         $.ajax({
             dataType: "json",
             url: "/api/interview",
-            data: {term:$event.target.value},
+            data: {term: $event.target.value},
             success: function (result) {
                 if (result.error) {
-                    toastr['warning'](" Message: " + result.message,"Interview Search Error" );
+                    toastr['warning'](" Message: " + result.message, "Interview Search Error");
                 }
-                else{
+                else {
                     home.setState({interviews: result});
                 }
             },
-            error:function(err){
-                toastr['error'](" Message: " + err.responseJSON.message,"Interview Search Error [code: " + err.status+"]" );
+            error: function (err) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Interview Search Error [code: " + err.status + "]");
             }
         });
+    }
+
+    handleInterviewEdit() {
+
+    }
+
+    handleInterviewDelete() {
+
+    }
+
+    handleInterviewClick(event) {
+        setPage(<InterviewView />)
     }
 }

@@ -16,8 +16,11 @@
     {{ Html::style('css/base.css') }}
     {{ Html::style('css/app.css') }}
     {{ Html::style('toaster/toaster.css') }}
+
+
     {{ Html::script("js/jquery-3.3.1.min.js")}}
     {{ Html::script("toaster/toaster.min.js")}}
+    {{ Html::script ("js/base.js") }}
     {{ Html::script('js/app.js',array('type'=>"text/babel"))}}
     {{ HTML::script('js/auth.js',array('type'=>"text/babel"))}}
     {{ HTML::script('js/interview.js',array('type'=>"text/babel"))}}

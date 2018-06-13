@@ -1,5 +1,4 @@
 class Header extends React.Component {
-
   logoutUser(){
 
     console.log("logout clicked");
@@ -111,80 +110,6 @@ class Page extends React.Component {
     }
 }
 
-class App extends React.Component {
-    constructor(props) {
-        // the app should initialize the toaster first.
-        toastr.options.positionClass = 'toast-bottom-full-width';
-        toastr.options.extendedTimeOut = 1000;
-        toastr.options.timeOut = 5000;
-        toastr.options.fadeOut = 250;
-        toastr.options.fadeIn = 250;
-
-        super(props)
-        this.state = {
-            current_page: "home",
-            renderer: null,
-            user: {loggedin: false}
-        }
-        this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-
-    }
-
-    componentDidMount() {
-        let current = this;
-        $.getJSON("/api/user", function (response) {
-            if (response.loggedin) {
-
-                current.setState({user: response, current_page: "home"})
-            }
-            else {
-                current.setState({user: response, current_page: "login"})
-            }
-        })
-    }
-
-    render() {
-        if (this.state.user.loggedin) {
-            switch (this.state.current_page) {
-                case "home":
-                    return <Page user={this.state.user}>
-                        {$.inArray(this.state.user.roles, "admin") ?
-                            <Home admin/> :
-                            <Home/>
-                        }
-
-                    </Page>
-            }
-
-        }
-        else {
-            return <Page user={this.state.user}>
-                <Login onSubmit={this.handleLoginSubmit}/>
-            </Page>
-        }
-    }
-    handleLoginSubmit(email,password){
-        let current=this;
-        $.ajax({
-            dataType:"json",
-            method:"post",
-            url:"api/user/login",
-            data:{email:email,password:password},
-            success:function($result){
-                if($result.loggedin){
-                    current.setState({current_page:"home",user:$result})
-                }
-                else{
-                    toastr['warning'](" Message: " + $result.message,"Error while login" );
-                }
-            },
-            error:function($error){
-                toastr['error'](" Message: " + err.responseJSON.message,"Server error while logging in [code: " + err.status+"]" );
-            }
-        });
-    }
-}
-
 class BodyHeader extends React.Component{
     render(){
         return <div className="row h1 text-center text-uppercase">
@@ -193,5 +118,40 @@ class BodyHeader extends React.Component{
                <hr id="header-separtion-line"/>
             </div>
         </div>
+    }
+}
+
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        // the app should initialize the toaster first.
+        toastr.options.positionClass = 'toast-bottom-full-width';
+        toastr.options.extendedTimeOut = 1000;
+        toastr.options.timeOut = 5000;
+        toastr.options.fadeOut = 250;
+        toastr.options.fadeIn = 250;
+
+        this.state = {
+            renderer: null,
+            user: {loggedin: false}
+        }
+        if(pageUser().loggedin){
+            this.state.current_page=<Home />;
+        }
+        else{
+            this.state.current_page=<Login />;
+
+        }
+    }
+
+    componentDidMount() {
+        appInstance=this;
+    }
+
+    render() {
+        return this.state.current_page;
+    }
+    changeRenderer(renderer) {
+        this.setState({current_page: renderer})
     }
 }
