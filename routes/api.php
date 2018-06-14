@@ -41,33 +41,19 @@ Route::prefix('interview')->group(function () {
     Route::get('/create', 'InterviewController@createInterview');
 
 
+    Route::get('/{interview_id}',"InterviewController@get");
+
     // interview/{interview_id}/edit
     // In: field_name : (title,date,location) -> one of these 3
     //    value  : the value to update with.
     // Out: success (true/false)
     Route::post('/{interview_id}/edit', 'InterviewController@editInterview');
 
-    // interview/{interview_id}/interview_criteria/create
-    // In: null
-    // Out: Success (true/false)
-    // id
-
-    // interview/{interview_id}/
-    Route::get('/{interview_id}/interview_criteria', 'UInterviewController@createEvaluationCriteria');
-
-    Route::post('/{interview_id}/interview_criteria/create', 'InterviewController@testme');
-
-    // interview/{interview_id}/interview_criteria/edit
-    // In: id
-    // field_name: value
-    // Out: success (true/false)
-    Route::post('/{interview_id}/interview_criteria/edit', 'InterviewController@testme');
-
     // interview/{interview_id}/interviewer/add/
     // In:
     // idOut:
     // Success (true/false)
-    Route::post('/{interview_id}/interviewer/add', 'InterviewController@testme');
+    Route::post('/interviewer/add', 'InterviewController@testme');
 
     // interview/{interview_id}/interviewer/evaluation_criteria
     // In: interviewer_id
@@ -124,6 +110,24 @@ Route::prefix('interview')->group(function () {
     });
 });
 
+Route::prefix('evaluation_criteria')->group(function(){
+
+    // interview/{interview_id}/evaluation_criteria/create
+    // In: null
+    // Out: Success (true/false)
+    // id
+
+    // interview/{interview_id}/
+    Route::get('/', 'InterviewController@createEvaluationCriteria');
+
+    // interview/{interview_id}/evaluation_criteria/edit
+    // In: id
+    // field_name: value
+    // Out: success (true/false)
+    Route::post('/edit', 'InterviewController@editEvaluationCriteria');
+
+    Route::post('/delete','InterviewController@deleteEvaluationCriteria');
+});
 Route::get('/', function () {
     return "home";
 });

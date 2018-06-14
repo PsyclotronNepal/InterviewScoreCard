@@ -26,3 +26,6 @@ $.ajax({
     },
     async:false
 });
+function makeEditable(component){
+    component.innerHTML='<input value="'+component.innerHTML+'" />';
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EvaluationCriterium;
 use App\Models\Interview;
 use App\Models\InterviewerHasInterview;
 use Illuminate\Http\Request;
@@ -49,9 +50,13 @@ class InterviewController extends Controller
         return ['error' => true, "message" => "You are not assigned any roles"];
     }
 
-    function getid(Request $request)
+    function get(Request $request,$interviewId)
     {
-        return $request;
+        $interview=Interview::find($interviewId);
+        $interview->evaluation_criteria=$interview->evaluationCriteria;
+        $interview->interviewees=$interview->interviewees;
+        $interview->interviewers=$interview->interviewers;
+        return $interview;
     }
 
     function createInterview(Request $request)
@@ -68,12 +73,10 @@ class InterviewController extends Controller
     function editInterview(Request $request)
     {
         if(Auth::user()->isAdmin()){
-            $i=Interview::where('id',$request->interview_id)
+            Interview::where('id',$request->interview_id)
                 ->update(array($request->field_name => $request->value));
-            if($i){
-                return ['error' => false];
-            }
-            return ['error'=>true,"message"=> "Unexpected error while updating database"];
+
+            return ['error'=>false];
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
     }
@@ -82,12 +85,10 @@ class InterviewController extends Controller
 
     function createEvaluationCriteria(Request $request)
     {
-        if(Auth::user()->isAdmin()){
-            $criteria=new EvaluationCriteria();
-            $criteria->interview_id=$request->interview_id;
-            $criteria.save();
 
-            return ['error' => false];
+        if(Auth::user()->isAdmin()){
+            return Interview::find($request->interview_id)->evaluationCriteria()->create();
+
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
     }
@@ -100,18 +101,20 @@ class InterviewController extends Controller
 
     }
 
-    function editEvaluationCriteria()
+    function editEvaluationCriteria(Request $request)
     {
         if(Auth::user()->isAdmin()){
+            EvaluationCriterium::find($request->evaluation_id)->update(array($request->field_name=>$request->value));
             return ['error' => false];
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
 
     }
 
-    function deleteEvaluationCriteria()
+    function deleteEvaluationCriteria(Request $request)
     {
         if(Auth::user()->isAdmin()){
+            EvaluationCriterium::find($request->evaluation_id)->delete();
             return ['error' => false];
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];

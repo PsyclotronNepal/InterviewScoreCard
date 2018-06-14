@@ -1,6 +1,86 @@
+class TableData extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {content: this.props.children};
+        this.changeHandler = this.props.onChange ?
+            this.props.onChange :
+            function () {
+            };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+
+        if (event.target.innerHTML != this.state.content) {
+            let current = this;
+            $.ajax({
+                dataType: "json",
+                url: '/api/evaluation_criteria/edit',
+                method: "post",
+                data: {
+                    evaluation_id: event.target.parentNode.getAttribute('data-id'),
+                    field_name: current.props.fieldName,
+                    value: event.target.innerHTML.trim()
+                },
+                success: function (response) {
+                    if (response.error) {
+                        toastr['warning'](response.message, "Error");
+                        current.node.innerHTML = current.state.content;
+                    } else {
+                        current.setState({content: current.node.innerHTML});
+                    }
+                },
+                error: function (err) {
+                    current.node.innerHTML = current.state.content;
+                    toastr['error'](" Message: " + err.responseJSON.message, "Error while updating changes " + err.status + "]");
+                }
+            })
+        }
+    }
+
+    componentDidMount() {
+        this.node = ReactDOM.findDOMNode(this);
+        this.node.innerHTML = this.state.content;
+    }
+
+    render() {
+        return <td contentEditable={true} onKeyUp={this.handleChange}></td>
+    }
+}
+
 class InterviewCard extends React.Component {
     constructor(props) {
         super(props);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+    }
+
+    handleClick(event) {
+        $.ajax({
+            dataType: 'json',
+            url: '/api/interview/' + this.props['data-id'],
+            success: function (response) {
+                setPage(<InterviewView data={response}/>)
+            },
+            error: function (err) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Interview Detail fetch Error [code: " + err.status + "]");
+            }
+        })
+    }
+
+    handleDelete(event) {
+        event.target.key = this.props.key;
+        if (this.props.onDelete) {
+            this.props.onDelete(event);
+        }
+    }
+
+    handleEdit(event) {
+        event.target.key = this.props.key;
+        if (this.props.onEdit) {
+            this.props.onEdit();
+        }
     }
 
     render() {
@@ -9,24 +89,20 @@ class InterviewCard extends React.Component {
                 <div className="card-control card-control-shadowed">
                     <div className="mb-2">
                         <i className="fa fa-edit"
-                           onClick={this.props.onEdit ? this.props.onEdit : function () {
-                           }}>
+                           onClick={this.handleEdit}>
 
                         </i>
                     </div>
                     <div>
                         <i className="fa fa-trash-alt"
-                           onClick={this.props.onDelete ? this.props.onDelete : function () {
-                           }}>
-
+                           onClick={this.handleDelete}>
                         </i>
                     </div>
                 </div>
                 : ""
             }
 
-            <a onClick={this.props.onClick ? this.props.onClick : function () {
-            }}>
+            <a onClick={this.handleClick}>
                 <div className="card-header text-primary">
                     <strong>{this.props.name}</strong>
                 </div>
@@ -63,6 +139,7 @@ class InterviewList extends React.Component {
                         {
                             interviews.map((interview) =>
                                 <InterviewCard key={interview.id} name={interview.title} location={interview.location}
+                                               data-id={interview.id}
                                                date={interview.date}
                                                onClick={this.props.onClick} onEdit={this.props.onEdit}
                                                onDelete={this.props.onDelete}
@@ -100,7 +177,11 @@ class EventDetail extends React.Component {
             title: this.props.title,
             date: this.props.date,
             location: this.props.location
-        }
+        };
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleLocationChange = this.handleDateChange.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.submitChange = this.submitChange.bind(this);
     }
 
     render() {
@@ -108,34 +189,86 @@ class EventDetail extends React.Component {
             <legend><strong>Event Detail</strong></legend>
             <div className="container-fluid">
                 <div className="form-group form-row ">
-                    <label className="col-3">{this.state.title}</label>
+                    <label className="col-3">Title</label>
                     <input className="col-9 form-control" placeholder="Interview Title"
-                           onChange={this.handleTitleChange}/>
+                           onChange={this.handleTitleChange}
+                           value={this.state.title}/>
                 </div>
                 <div className="form-group form-row">
-                    <label className="col-3">{this.state.date}</label>
+                    <label className="col-3">Date</label>
                     <input className="col-9 form-control" type="date" placeholder="Choose date"
-                           onChange={this.handleDateChange}/>
+                           onChange={this.handleDateChange}
+                           value={this.state.date}/>
                 </div>
                 <div className="form-group form-row">
-                    <label className="col-3">{this.state.location}</label>
+                    <label className="col-3">Location</label>
                     <input className="col-9 form-control" placeholder=" Interview Location"
-                           onChange={this.handleLocationChange}/>
+                           onChange={this.handleLocationChange}
+                           value={this.state.location}/>
                 </div>
             </div>
         </fieldset>
     }
 
-    handletitleChange(event) {
-        this.setState({title: event.target.value});
+    handleTitleChange(event) {
+        this.submitChange("title", event.target.value);
     }
 
     handleLocationChange() {
-        this.setState({location: event.target.value});
+        this.submitChange("location", event.target.value);
     }
 
     handleDateChange() {
-        this.setState({date: event.target.value});
+        this.submitChange("date", event.target.value);
+    }
+
+    submitChange(key, value) {
+        var current = this;
+        $.ajax({
+                dataType: "json",
+                url: "/api/interview/" + current.props['data-interview'] + "/edit",
+                method: "post",
+                data: {
+                    "field_name": key,
+
+                    "value": value
+                },
+                success: function (response) {
+                    if (response.error) {
+                        toastr['warning'](response.message, "Error");
+                    }
+                    else {
+                        current.setState({key: event.target.value});
+                    }
+                },
+                error: function (err) {
+                    toastr['error'](" Message: " + err.responseJSON.message, "Error while updating changes " + err.status + "]");
+                }
+            }
+        )
+    }
+
+
+}
+
+class CriteriaRow extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = this.props.data;
+    }
+
+    render() {
+        return <tr data-id={this.state.id}>
+            <th className="hover-show-delete">
+                <i className="fa fa-trash-alt" data-id={this.state.id}
+                   onClick={this.props.onDelete ? this.props.onDelete : function () {
+                   }}></i>
+                <p>{this.props.counter}</p>
+            </th>
+            <TableData fieldName="title">{this.state.title}</TableData>
+            <TableData fieldName="weight">{this.state.weight}</TableData>
+            <TableData fieldName="remarks">{this.state.remarks}</TableData>
+        </tr>
     }
 }
 
@@ -145,14 +278,74 @@ class EvaluationCriteria extends React.Component {
         this.state = this.props.list ?
             {criteria: this.props.list} :
             {criteria: []}
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount() {
+    }
+
+    handleAdd() {
+        let current = this;
+        $.ajax({
+            dataType: "json",
+            url: "/api/evaluation_criteria",
+            data: {
+                interview_id: this.props['data-interview']
+            },
+            success: function (reply) {
+                if (reply.error) {
+                    toastr['warning'](response.message, "Error");
+                }
+                else {
+                    current.setState({
+                        criteria: current.state.criteria.concat({
+                            id: reply.id,
+                            title: "",
+                            weight: "",
+                            remark: ""
+                        })
+                    });
+                }
+            },
+            error: function (err) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Error while updating changes " + err.status + "]");
+            }
+        });
+    }
+
+    handleDelete(event) {
+
+        let current = this;
+        let evaluation_id = parseInt(event.target.getAttribute("data-id"));
+        $.ajax({
+            dataType: "json",
+            url: "/api/evaluation_criteria/delete",
+            method: "post",
+            data: {
+                evaluation_id: evaluation_id
+            },
+            success: function (reply) {
+                if (reply.error) {
+                    toastr['warning'](response.message, "Error");
+                }
+                else {
+                        current.setState({
+                            criteria: current.state.criteria.filter(function (item) {
+                                return item.id !== evaluation_id;
+                            })
+                        });
+                }
+            },
+            error: function (err) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Error while updating changes " + err.status + "]");
+            }
+        })
 
     }
 
     render() {
-
+        let i = 1;
         return <fieldset>
             <legend><strong>Evaluation Criteria</strong></legend>
             <div className="container-fluid pl-4">
@@ -166,20 +359,13 @@ class EvaluationCriteria extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-
                     {
                         this.state.criteria.map((criteria) =>
-                            <tr key={criteria.id}>
-                                <th>-</th>
-                                <td>{criteria.title}</td>
-                                <td>{criteria.weight}</td>
-                                <td>{criteria.remark}</td>
-                            </tr>
+                            <CriteriaRow onDelete={this.handleDelete} key={criteria.id} counter={i++} data={criteria}/>
                         )
                     }
-
-                    <tr onClick={this.handleNewCriteria}>
-                        <th>2</th>
+                    <tr onClick={this.handleAdd}>
+                        <th>{i}</th>
                         <td colSpan="3" className="text-center"><i className="fa fa-plus-square"></i> &nbsp;Add new
                             Criteria
                         </td>
@@ -188,10 +374,6 @@ class EvaluationCriteria extends React.Component {
                 </table>
             </div>
         </fieldset>
-    }
-
-    handleNewCriteria() {
-
     }
 }
 
@@ -202,7 +384,7 @@ class Interviewers extends React.Component {
         this.state =
             this.props.list ?
                 {interviewers: this.props.list} :
-                {interviewers: {data: null}}
+                {interviewers: null}
 
     }
 
@@ -225,8 +407,8 @@ class Interviewers extends React.Component {
 
                 <div className="row text-center">
                     {
-                        this.state.interviewers.data ?
-                            this.state.interviewers.data.map((interviewer) =>
+                        this.state.interviewers ?
+                            this.state.interviewers.map((interviewer) =>
                                 <div className="card card-clear card-hover-effect">
                                     <div className="card-control">
                                         <div onclick={this.handleInterviewerRemove}><i
@@ -267,7 +449,7 @@ class Interviewees extends React.Component {
         super(props)
         this.state = this.props.list ?
             {interviewees: this.props.list} :
-            {interviewees: {data: []}}
+            {interviewees: null}
     }
 
     render() {
@@ -294,7 +476,7 @@ class Interviewees extends React.Component {
                         </div>
                     </div>
                     {
-                        this.state.interviewees.data.map((interviewee) =>
+                        this.state.interviewees.map((interviewee) =>
                             <div className="card card-clear card-hover-effect">
                                 <div className="card-control">
                                     <div className="mb-2" data-target="#form-add-interviewee" data-toggle="modal"><i
@@ -318,28 +500,13 @@ class Interviewees extends React.Component {
 }
 
 class InterviewView extends React.Component {
-    constructor() {
-        super()
-        this.state={
-            title:"",
-            locatioin:"",
-            date:"",
-            interviewers:[],
-            interviewees:[]
-        }
+    constructor(props) {
+        super(props)
+        this.state = this.props.data;
     }
 
     componentDidMount() {
-        $.ajax({
-            dataType: 'json',
-            url: '/api/interview/'+this.props.key,
-            success: function (response) {
-                this.setState( response)
-            },
-            error: function (response) {
-                toastr['error'](" Message: " + err.responseJSON.message, "Interview Detail fetch Error [code: " + err.status + "]");
-            }
-        })
+
 
     }
 
@@ -348,13 +515,15 @@ class InterviewView extends React.Component {
             <Body>
             <div id="content-detail" className="row container-fluid align-left">
                 <form className="match-parent">
-                    <EventDetail date={this.state.date} location={this.state.location} title={this.state.title}/>
-                    <EvaluationCriteria list={this.state.evaluation_criteria}/>
-                    <Interviewers list={this.state.interviewers}/>
-                    <Interviewees list={this.state.interviewees}/>
+                    <EventDetail data-interview={this.state.id} date={this.state.date} location={this.state.location}
+                                 title={this.state.title}/>
+                    <EvaluationCriteria data-interview={this.state.id} list={this.state.evaluation_criteria}/>
+                    <Interviewers data-interview={this.state.id} list={this.state.interviewers}/>
+                    <Interviewees data-interview={this.state.id} list={this.state.interviewees}/>
                 </form>
             </div>
             </Body>
         </Page>
+
     }
 }

@@ -66,6 +66,18 @@ legend.scheduler-border {
 border-bottom: none;
 }
 
+.hover-show-delete > i{
+    display:none;
+}
+.hover-show-delete > p{
+    display:inherit;
+}
+.hover-show-delete:hover > p{
+    display:none;
+}
+.hover-show-delete:hover > i{
+    display:inherit;
+}
 /**************************************************************************************
     Some classes that is gonna make working with elements and positining them easier
 ****************************************************************************************/

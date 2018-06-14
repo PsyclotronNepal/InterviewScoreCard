@@ -10,6 +10,7 @@ class Home extends React.Component {
 
         }
         this.handleSearch = this.handleSearch.bind(this,)
+        this.handleInterviewClick=this.handleInterviewClick.bind(this);
 
     }
 
@@ -83,6 +84,6 @@ class Home extends React.Component {
     }
 
     handleInterviewClick(event) {
-        setPage(<InterviewView />)
+
     }
 }

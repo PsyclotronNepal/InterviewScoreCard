@@ -7,6 +7,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
@@ -39,7 +40,7 @@ class Interview extends Eloquent
 		'location'
 	];
 
-	public function evaluation_criteria()
+	public function evaluationCriteria()
 	{
 		return $this->hasMany(\App\Models\EvaluationCriterium::class);
 	}
@@ -49,8 +50,12 @@ class Interview extends Eloquent
 		return $this->hasMany(\App\Models\Interviewee::class);
 	}
 
+	public function interviewers(){
+	    return $this->belongsToMany(User::class,"interviewer_has_interview","interview_id","interviewer_id")->withPivot('evaluation_id');
+    }
+
     public function interviewer_has_interview()
     {
-        return $this->hasOne(\App\Models\InterviewerHasInterview::class);
+        return $this->hasMany(\App\Models\InterviewerHasInterview::class);
 	}
 }
