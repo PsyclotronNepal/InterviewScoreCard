@@ -80,7 +80,6 @@ class InterviewList extends React.Component {
                                                date={interview.date}
                                                onClick={this.props.onClick} onEdit={this.props.onEdit}
                                                onDelete={this.props.onDelete}
-
                                 />)
                         }
                     </div>
@@ -98,9 +97,9 @@ class EventDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: '',
-            date: '',
-            location: ''
+            title: this.props.title,
+            date: this.props.date,
+            location: this.props.location
         }
     }
 
@@ -109,17 +108,17 @@ class EventDetail extends React.Component {
             <legend><strong>Event Detail</strong></legend>
             <div className="container-fluid">
                 <div className="form-group form-row ">
-                    <label className="col-3">Title</label>
+                    <label className="col-3">{this.state.title}</label>
                     <input className="col-9 form-control" placeholder="Interview Title"
                            onChange={this.handleTitleChange}/>
                 </div>
                 <div className="form-group form-row">
-                    <label className="col-3">Interview Start Date</label>
+                    <label className="col-3">{this.state.date}</label>
                     <input className="col-9 form-control" type="date" placeholder="Choose date"
                            onChange={this.handleDateChange}/>
                 </div>
                 <div className="form-group form-row">
-                    <label className="col-3">Location</label>
+                    <label className="col-3">{this.state.location}</label>
                     <input className="col-9 form-control" placeholder=" Interview Location"
                            onChange={this.handleLocationChange}/>
                 </div>
@@ -203,7 +202,7 @@ class Interviewers extends React.Component {
         this.state =
             this.props.list ?
                 {interviewers: this.props.list} :
-                {interviewers: {data:null}}
+                {interviewers: {data: null}}
 
     }
 
@@ -217,7 +216,7 @@ class Interviewers extends React.Component {
             <div className="container-fluid pl-4">
                 <div className="row search-block input-group">
                     <div className="form-group col-auto form-inline">
-                        <i className="fa fa-search" style={{position:"absolute", left: 16+"pt"}}></i>
+                        <i className="fa fa-search" style={{position: "absolute", left: 16 + "pt"}}></i>
                         <input className="form-control padded-left-6x" title="search interviewers"/>
                         <i className="fa fa-user-plus padded-left-2x"></i>
                     </div>
@@ -226,32 +225,32 @@ class Interviewers extends React.Component {
 
                 <div className="row text-center">
                     {
-                        this.state.interviewers.data?
-                        this.state.interviewers.data.map((interviewer) =>
-                            <div className="card card-clear card-hover-effect">
-                                <div className="card-control">
-                                    <div onclick={this.handleInterviewerRemove}><i className="fa fa-minus-square"></i>
+                        this.state.interviewers.data ?
+                            this.state.interviewers.data.map((interviewer) =>
+                                <div className="card card-clear card-hover-effect">
+                                    <div className="card-control">
+                                        <div onclick={this.handleInterviewerRemove}><i
+                                            className="fa fa-minus-square"></i>
+                                        </div>
+                                    </div>
+                                    <div className="card-body">
+                                        <img className="rounded-circle card-image" src={interviewer.profile_image}/>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div>{interviewer.fname}</div>
+                                        <div className="mt-2">
+                                            <select className="form-control" title="select evaluation criteria">
+                                                {
+                                                    this.props.criterias.map((cirteria) =>
+                                                        <option value={criteria.id}> Algorithms</option>
+                                                    )
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="card-body">
-                                    <img className="rounded-circle card-image" src={interviewer.profile_image}/>
-                                </div>
-                                <div className="card-footer">
-                                    <div>{interviewer.fname}</div>
-                                    <div className="mt-2">
-                                        <select className="form-control" title="select evaluation criteria">
-                                            {
-                                                this.props.criterias.map((cirteria) =>
-                                                    <option value={criteria.id}> Algorithms</option>
-                                                )
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        ):
-
-                        <h4 className="text-center col-12 text-muted">No interviewers assigned yet</h4>
+                            ) :
+                            <h4 className="text-center col-12 text-muted">No interviewers assigned yet</h4>
                     }
                 </div>
             </div>
@@ -278,7 +277,7 @@ class Interviewees extends React.Component {
 
                 <div className="row search-block input-group ">
                     <div className="form-group col-auto form-inline">
-                        <i className="fa fa-search " style={{position:"absolute", left: 16+"pt"}}></i>
+                        <i className="fa fa-search " style={{position: "absolute", left: 16 + "pt"}}></i>
                         <input className="form-control padded-left-6x" title="search interviewees"/>
                         <i className="fa fa-user-plus padded-left-2x"></i>
                     </div>
@@ -321,9 +320,26 @@ class Interviewees extends React.Component {
 class InterviewView extends React.Component {
     constructor() {
         super()
+        this.state={
+            title:"",
+            locatioin:"",
+            date:"",
+            interviewers:[],
+            interviewees:[]
+        }
     }
 
     componentDidMount() {
+        $.ajax({
+            dataType: 'json',
+            url: '/api/interview/'+this.props.key,
+            success: function (response) {
+                this.setState( response)
+            },
+            error: function (response) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Interview Detail fetch Error [code: " + err.status + "]");
+            }
+        })
 
     }
 
@@ -332,10 +348,10 @@ class InterviewView extends React.Component {
             <Body>
             <div id="content-detail" className="row container-fluid align-left">
                 <form className="match-parent">
-                    <EventDetail/>
-                    <EvaluationCriteria/>
-                    <Interviewers/>
-                    <Interviewees/>
+                    <EventDetail date={this.state.date} location={this.state.location} title={this.state.title}/>
+                    <EvaluationCriteria list={this.state.evaluation_criteria}/>
+                    <Interviewers list={this.state.interviewers}/>
+                    <Interviewees list={this.state.interviewees}/>
                 </form>
             </div>
             </Body>
