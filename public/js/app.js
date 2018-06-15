@@ -1,3 +1,40 @@
+
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        // the app should initialize the toaster first.
+        toastr.options.positionClass = 'toast-bottom-full-width';
+        toastr.options.extendedTimeOut = 1000;
+        toastr.options.timeOut = 5000;
+        toastr.options.fadeOut = 250;
+        toastr.options.fadeIn = 250;
+
+        this.state = {
+            renderer: null,
+            user: {loggedin: false}
+        }
+        if(pageUser().loggedin){
+            this.state.current_page=<Interviews />;
+        }
+        else{
+            this.state.current_page=<Login />;
+
+        }
+    }
+
+    componentDidMount() {
+        appInstance=this;
+    }
+
+    render() {
+        return this.state.current_page;
+    }
+    changeRenderer(renderer) {
+        this.setState({current_page: renderer})
+    }
+}
+
+
 class Header extends React.Component {
   logoutUser(){
 
@@ -118,40 +155,5 @@ class BodyHeader extends React.Component{
                <hr id="header-separtion-line"/>
             </div>
         </div>
-    }
-}
-
-class App extends React.Component {
-    constructor(props) {
-        super(props)
-        // the app should initialize the toaster first.
-        toastr.options.positionClass = 'toast-bottom-full-width';
-        toastr.options.extendedTimeOut = 1000;
-        toastr.options.timeOut = 5000;
-        toastr.options.fadeOut = 250;
-        toastr.options.fadeIn = 250;
-
-        this.state = {
-            renderer: null,
-            user: {loggedin: false}
-        }
-        if(pageUser().loggedin){
-            this.state.current_page=<Home />;
-        }
-        else{
-            this.state.current_page=<Login />;
-
-        }
-    }
-
-    componentDidMount() {
-        appInstance=this;
-    }
-
-    render() {
-        return this.state.current_page;
-    }
-    changeRenderer(renderer) {
-        this.setState({current_page: renderer})
     }
 }

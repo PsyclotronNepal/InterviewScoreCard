@@ -1,3 +1,34 @@
+
+class InterviewView extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = this.props.data;
+    }
+
+    componentDidMount() {
+
+    }
+
+    render() {
+        return <Page user={pageUser()}>
+            <Body>
+            <div id="content-detail" className="row container-fluid align-left">
+                <form className="match-parent">
+                    <EventDetail data-interview={this.state.id} date={this.state.date} location={this.state.location}
+                                 title={this.state.title}/>
+                    <EvaluationCriteria data-interview={this.state.id} list={this.state.evaluation_criteria}/>
+                    <Interviewers data-interview={this.state.id} list={this.state.interviewers}/>
+                    <Interviewees data-interview={this.state.id} list={this.state.interviewees}/>
+                </form>
+            </div>
+            </Body>
+        </Page>
+
+    }
+}
+
+
+
 class TableData extends React.Component {
     constructor(props) {
         super(props);
@@ -45,128 +76,6 @@ class TableData extends React.Component {
 
     render() {
         return <td contentEditable={true} onKeyUp={this.handleChange}></td>
-    }
-}
-
-class InterviewCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-    }
-
-    handleClick(event) {
-        $.ajax({
-            dataType: 'json',
-            url: '/api/interview/' + this.props['data-id'],
-            success: function (response) {
-                setPage(<InterviewView data={response}/>)
-            },
-            error: function (err) {
-                toastr['error'](" Message: " + err.responseJSON.message, "Interview Detail fetch Error [code: " + err.status + "]");
-            }
-        })
-    }
-
-    handleDelete(event) {
-        event.target.key = this.props.key;
-        if (this.props.onDelete) {
-            this.props.onDelete(event);
-        }
-    }
-
-    handleEdit(event) {
-        event.target.key = this.props.key;
-        if (this.props.onEdit) {
-            this.props.onEdit();
-        }
-    }
-
-    render() {
-        return <div className="card card-hover-effect mb-3">
-            {this.props.admin ?
-                <div className="card-control card-control-shadowed">
-                    <div className="mb-2">
-                        <i className="fa fa-edit"
-                           onClick={this.handleEdit}>
-
-                        </i>
-                    </div>
-                    <div>
-                        <i className="fa fa-trash-alt"
-                           onClick={this.handleDelete}>
-                        </i>
-                    </div>
-                </div>
-                : ""
-            }
-
-            <a onClick={this.handleClick}>
-                <div className="card-header text-primary">
-                    <strong>{this.props.name}</strong>
-                </div>
-
-                <div className="card-body text-info">
-                    <div className="card-subtitle"><i className="fa fa-4x fa-calendar"></i></div>
-                    {this.props.date}
-                </div>
-                <div className="card-footer">
-                    {this.props.location}
-                </div>
-            </a>
-        </div>
-    }
-}
-
-
-class InterviewList extends React.Component {
-    constructor(props) {
-        super(props)
-        let interviews = []
-        if (this.props.interviews) {
-            interviews = this.props.interviews;
-        }
-        this.state = {interviews: interviews}
-    }
-
-    render() {
-        if (this.props.interviews) {
-            if (this.props.interviews.length) {
-                const interviews = this.props.interviews
-                if (this.props.admin) {
-                    return <div className="row align-items-center text-center">
-                        {
-                            interviews.map((interview) =>
-                                <InterviewCard key={interview.id} name={interview.title} location={interview.location}
-                                               data-id={interview.id}
-                                               date={interview.date}
-                                               onClick={this.props.onClick} onEdit={this.props.onEdit}
-                                               onDelete={this.props.onDelete}
-                                               admin
-
-                                />)
-                        }
-                    </div>
-                }
-                else {
-                    return <div className="row align-items-center text-center">
-                        {
-                            interviews.map((interview) =>
-                                <InterviewCard key={interview.id} name={interview.title} location={interview.location}
-                                               date={interview.date}
-                                               onClick={this.props.onClick} onEdit={this.props.onEdit}
-                                               onDelete={this.props.onDelete}
-                                />)
-                        }
-                    </div>
-                }
-            }
-        }
-        return <div className="row align-items-center text-center">
-            <h4 className="text-center col-12 text-muted">This place is empty</h4>
-        </div>
-
     }
 }
 
@@ -499,31 +408,3 @@ class Interviewees extends React.Component {
 
 }
 
-class InterviewView extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = this.props.data;
-    }
-
-    componentDidMount() {
-
-
-    }
-
-    render() {
-        return <Page user={pageUser()}>
-            <Body>
-            <div id="content-detail" className="row container-fluid align-left">
-                <form className="match-parent">
-                    <EventDetail data-interview={this.state.id} date={this.state.date} location={this.state.location}
-                                 title={this.state.title}/>
-                    <EvaluationCriteria data-interview={this.state.id} list={this.state.evaluation_criteria}/>
-                    <Interviewers data-interview={this.state.id} list={this.state.interviewers}/>
-                    <Interviewees data-interview={this.state.id} list={this.state.interviewees}/>
-                </form>
-            </div>
-            </Body>
-        </Page>
-
-    }
-}
