@@ -62,7 +62,7 @@ class Login extends React.Component {
             success: function ($result) {
                 if ($result.loggedin) {
                     changeUser($result);
-                    setPage(<Home />)
+                    setPage(<Interviews />)
                 }
                 else {
                     toastr['warning'](" Message: " + $result.message, "Error while login");

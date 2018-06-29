@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Interviews from './components/InterviewCard';
-import Login from './components/Login';
+import * as toastr from 'toastr';
+import { setAppInstance, pageUser } from './Base';
+import Login from "./components/Login";
+import Interviews from "./components/Interviews";
 
 export default class Main extends Component {
     constructor(props) {
@@ -18,16 +20,16 @@ export default class Main extends Component {
             user: {loggedin: false}
         }
         if(pageUser().loggedin){
-            this.state.current_page=<Interviews />;
+            this.state.current_page=<Interviews/>;
         }
         else{
-            this.state.current_page=<Login />;
+            this.state.current_page=<Login/>;
 
         }
     }
 
     componentDidMount() {
-        appInstance=this;
+        setAppInstance(this);
     }
 
     render() {
@@ -39,5 +41,5 @@ export default class Main extends Component {
 }
 
 if (document.getElementById('react-content')) {
-    ReactDOM.render(<Main />, document.getElementById('react-content'));
+    ReactDOM.render(<Main/>, document.getElementById('react-content'));
 }

@@ -19,45 +19,45 @@ COLORS:: When we have to choose a color, choose from here, because this is the c
 
 /*The list of colors so that i can see them visually in the ide.*/
 .colors{
-  background-color:#000000;
-  color:#ffffff;
-  text-decoration-color: #00948b;
-  border-left-color: #b7d6e5;
-  border-right-color:#41464b;
+    background-color:#000000;
+    color:#ffffff;
+    text-decoration-color: #00948b;
+    border-left-color: #b7d6e5;
+    border-right-color:#41464b;
 
 }
 
-/****************************************************************
-***************---- CSS STYLING for the ----*********************
-***************-----  Admin Edit page ------*********************
-*****************************************************************/
+    /****************************************************************
+    ***************---- CSS STYLING for the ----*********************
+    ***************-----  Admin Edit page ------*********************
+    *****************************************************************/
 
 #profile-image-upload{
-  padding:6pt;
-  margin-top:20pt;
-  margin-right:30pt;
-  text-align: center;
-  border:solid 2px;
-  min-width:130pt;
+    padding:6pt;
+    margin-top:20pt;
+    margin-right:30pt;
+    text-align: center;
+    border:solid 2px;
+    min-width:130pt;
 }
 
 #profile-image-upload div{
-  padding-top:10pt;
+    padding-top:10pt;
 }
 
 #profile-image-upload > div + div,
 #profile-image-upload:hover > div,
 #profile-image-upload:hover .fa,
 #profile-image-upload > .fa + .fa{
-  display:none;
+    display:none;
 }
 #profile-image-upload:hover{
-  background:#B7D6E5 ;
+    background:#B7D6E5 ;
 }
 
 #profile-image-upload:hover > div+div,
 #profile-image-upload:hover > .fa + .fa {
-  display:block;
+    display:block;
 }
 
 
@@ -67,77 +67,77 @@ COLORS:: When we have to choose a color, choose from here, because this is the c
 *****************************************************************/
 
 .search-button{
-  display: inline-block;
-  position:absolute;
-  right:30px;
-  top: 0.8rem;
+    display: inline-block;
+    position:absolute;
+    right:30px;
+    top: 0.8rem;
 }
 .search-button:hover{
-  transform: scale(1.3)
+    transform: scale(1.3)
 
 }
 .search-input{
-  padding-right:35px;
-  margin-bottom: 30pt;
+    padding-right:35px;
+    margin-bottom: 30pt;
 }
 .search-input:hover + i {
-  transform:scale(1.3);
+    transform:scale(1.3);
 }
 .search-input:hover{
-  transform:scale(1,1.08);
-  box-shadow: 2px 1px lightgrey   ;
+    transform:scale(1,1.08);
+    box-shadow: 2px 1px lightgrey   ;
 }
 
 .card{
-  margin-right:10px;
-  margin-left:10px;
-  width: 110pt;
-  margin-bottom:15px;
+    margin-right:10px;
+    margin-left:10px;
+    width: 110pt;
+    margin-bottom:15px;
 }
 
 .card-hover-effect .card-body {
-  margin-top:10px;
+    margin-top:10px;
 }
 
 .card-hover-effect .card-body .card-subtitle {
-  margin-bottom:15px;
+    margin-bottom:15px;
 }
 
 .card-control{
-  padding: 6pt;
-  position:absolute;
-  right: 4pt;
-  top: 4pt;
-  font-size:14pt;
+    padding: 6pt;
+    position:absolute;
+    right: 4pt;
+    top: 4pt;
+    font-size:14pt;
 }
 
 .card-hover-effect .card-control {
-  display:none;
+    display:none;
 }
 
 .card-hover-effect:hover .card-control {
-  display:block;
+    display:block;
 }
 
 .card-hover-effect:hover {
-  transform: scale(1.04);
-  box-shadow: 1px 3px lightgrey;
+    transform: scale(1.04);
+    box-shadow: 1px 3px lightgrey;
 }
 
 .card-control-shadowed {
-  background-color: silver;
-  border: solid 2px cornflowerblue;
-  border-radius: 3px;
-  animation: fadein .2s;
+    background-color: silver;
+    border: solid 2px cornflowerblue;
+    border-radius: 3px;
+    animation: fadein .2s;
 }
 
 @keyframes fadein {
-  from {
-    transform: scale(0.2);
-  }
-  to {
-    transform: scale(1);
-  }
+    from {
+        transform: scale(0.2);
+    }
+    to {
+        transform: scale(1);
+    }
 }
 
 /****************************************************************
@@ -145,45 +145,45 @@ COLORS:: When we have to choose a color, choose from here, because this is the c
 ***************----  Interview edit page ----********************
 *****************************************************************/
 fieldset{
-  margin-top:10pt;
+    margin-top:10pt;
 }
 
 .card img{
-  max-height: 70pt;
+    max-height: 70pt;
 }
 .search-block{
-  margin-bottom:16pt;
+    margin-bottom:16pt;
 }
 
 .card-clear .card-header,
 .card-clear .card-footer,
 .card-clear {
-  border: 0;
+    border: 0;
 }
 
 .card-hover-effect:hover {
 }
 .card-control i:hover{
-  transform: scale(1.5);
+    transform: scale(1.5);
 }
 .card-control .fa-minus-square{
-  color: #660000;
+    color: #660000;
 }
 .card-control .fa-edit{
-  color: #00006e;
+    color: #00006e;
 }
 .fa-trash-alt{
-  color:#660000;
+    color:#660000;
 }
 
 /*For the popup thing that appears on clicking the "create new interviewee" */
 
 #add-inerviewee-header {
-  font-size: 18pt;
+    font-size: 18pt;
 }
 
 #add-inerviewee-header i {
-  font-size: 20pt;
+    font-size: 20pt;
 }
 
 /****************************************************************
@@ -192,9 +192,9 @@ fieldset{
 *****************************************************************/
 
 .modal img {
-  display: flex;
-  max-height: 50pt;
-  align-self: center;
+    display: flex;
+    max-height: 50pt;
+    align-self: center;
 }
 
 /****************************************************************
@@ -203,16 +203,16 @@ fieldset{
 *****************************************************************/
 
 .input-score {
-  text-align: center;
-  font-size: 24pt;
-  padding: 3px;
-  width: 100%;
-  border: solid 1px #b7d6e5;
-  box-shadow: 2px 2px lightblue;
+    text-align: center;
+    font-size: 24pt;
+    padding: 3px;
+    width: 100%;
+    border: solid 1px #b7d6e5;
+    box-shadow: 2px 2px lightblue;
 }
 
 .input-score:focus {
-  box-shadow: 2px 2px 2px 2px cornflowerblue;
+    box-shadow: 2px 2px 2px 2px cornflowerblue;
 }
 
 /****************************************************************
@@ -221,8 +221,8 @@ fieldset{
 *****************************************************************/
 
 #profile-image-upload img {
-  max-height: 100pt;
-  max-width: 100pt;
+    max-height: 100pt;
+    max-width: 100pt;
 }
 
 /****************************************************************
@@ -231,26 +231,26 @@ fieldset{
 *****************************************************************/
 
 form.login-form {
-  min-width: 320px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border: solid 2px #00948b;
-  padding: 25pt;
-  padding-right: 35pt;
-  border-radius: 5pt;
+    min-width: 320px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 2px #00948b;
+    padding: 25pt;
+    padding-right: 35pt;
+    border-radius: 5pt;
 }
 
 .error {
-  display: none;
-  color: #f00;
+    display: none;
+    color: #f00;
 }
 
 #login-btn {
-  font-size: 14pt;
-  border-radius: 4pt;
-  background-color: #b7d6e5;
+    font-size: 14pt;
+    border-radius: 4pt;
+    background-color: #b7d6e5;
 }
 
 /*#login-btn:hover{*/

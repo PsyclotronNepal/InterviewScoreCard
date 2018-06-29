@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-export default class Interviewees extends Component {
+export default class InterviewsInterviewees extends Component {
     constructor(props) {
         super(props)
         this.state = this.props.list ?

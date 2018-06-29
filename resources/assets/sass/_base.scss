@@ -1,0 +1,360 @@
+
+
+/**
+COLORS:: When we have to choose a color, choose from here, because this is the color palette we are using.
+
+    Black       : #000;
+    White       : #fff;
+    Dark Cyan   : #00948B;
+    Powder Blue : #B7D6E5;
+    Steel Gray  : #41464B;
+
+ */
+
+
+/****************************************************************
+    Default values to be used in the whole project.
+*****************************************************************/
+
+/* We might not even use this font.*/
+@font-face {
+  font-family: 'Stylish';
+  src: url('../fonts/Stylish-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*The default properties for the html*/
+html {
+  min-height: 100%;
+  height: 100%; /* cross-browser */
+  width: 100%;
+  padding:0;
+  margin:0;
+}
+#react-content{
+  padding:0!important;
+}
+html, body, p, div, span, form {
+  text-decoration-color: #00948B;
+  color:#00948B;
+  font-size: 12px;
+}
+
+div{
+  padding:0;
+  margin:0;
+}
+
+body {
+  background-color: #ffffff;
+  width:100%;
+  min-width: 600px;
+  height: 100%;
+  min-height: 100%;
+  padding: 0 !important; /*For dealing with the instability of page after the modal is closed*/
+
+
+}
+a:hover, a:visited, a:link, a:active
+{
+  text-decoration: none;
+}
+
+legend.scheduler-border {
+  width: auto;
+  border-bottom: none;
+}
+
+.hover-show-delete > i{
+  display:none;
+}
+.hover-show-delete > p{
+  display:inherit;
+}
+.hover-show-delete:hover > p{
+  display:none;
+}
+.hover-show-delete:hover > i{
+  display:inherit;
+}
+/**************************************************************************************
+    Some classes that is gonna make working with elements and positining them easier
+****************************************************************************************/
+
+.match-parent{
+  width:100%;
+  height:100%;
+}
+.match-parent-width{
+  width:100%;
+}
+.match-parent-height{
+  height:100%;
+}
+
+.isc-over-parent{
+  float: left;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  margin:0;
+  padding:0;
+}
+
+.shifted-bottom-1x{
+  margin-top:4pt;
+}
+.shifted-bottom-2x{
+  margin-top:8pt;
+}
+.shifted-bottom-3x{
+  margin-top:12pt;
+}
+.padded-left-1x{
+  padding-left:4pt;
+}
+.padded-left-2x{
+  padding-left:8pt;
+}
+.padded-left-3x{
+  padding-left:12pt;
+}
+.padded-left-4x{
+  padding-left:16pt;
+}
+.padded-left-5x{
+  padding-left:20pt;
+}
+.padded-left-8x{
+  padding-left:32pt;
+}
+
+.padded-left-6x{
+  padding-left:24pt;
+}
+.shifted-right {
+  margin-left: 30px;
+}
+.shifted-left {
+  margin-right: 30px;
+}
+
+
+/**************************************************************************************
+    Few more calsses for positioning elements properly.
+****************************************************************************************/
+
+/*Use to put the content into the horizontal and vertical center position.*/
+.isc-content-center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  display:inline-block;
+}
+
+/*Styling for a search bar, that might apperar at the right side in some pages.*/
+.search-right{
+  min-width:80%;
+  position:absolute;
+  right:30px;
+  display:inline-block;
+
+}
+
+
+/***************************************************************
+    Profile Pic and Heading
+*****************************************************************/
+
+#header {
+  background:linear-gradient(#dee4ee,#b7d6e5);
+  margin: 0;
+  margin-bottom: 20pt;
+  position: absolute;
+  height: 15%;
+  width: 100%;
+}
+
+#header-website-text {
+  height: 60pt;
+  line-height: 60pt;
+  position: absolute;
+  right: 5%;
+  /* bottom:20%; */
+}
+
+#profile-image {
+  margin-top: 0.2rem;
+  height: 60pt;
+  border: solid 2px #5a6268;
+}
+
+#option-logout{
+  position:absolute;
+  top:10px;
+  right:50px;
+}
+.logoimage{
+  position: absolute;
+  height: 100%;
+  top: -5%;
+
+}
+/************************ ****************************************
+    Navigation bar properties
+*****************************************************************/
+
+#navbar {
+  z-index:1;
+  font-size: medium;
+  padding-right: 0;
+}
+
+#nav-content{
+  width:100%;
+  margin-top:30px;
+}
+
+.nav-item{
+  font-size:16pt;
+  width:100%;
+  background-color:#eeeeee;
+  z-index:1;
+  margin-top:12px;
+  margin-bottom:12px;
+  padding:4px;
+  padding-bottom:6px;
+  padding-top:6px;
+  padding-right:10px;
+  border:solid #d7d7d7;
+  border-top: 0;
+  border-left: 0;
+  border-right:1px;
+  border-bottom:2px;
+  border-radius: 5px;
+}
+
+.nav-item > span > .fa{
+  display:none;
+}
+.nav-item span{
+  color:darkslategray;
+}
+
+.nav-item.active{
+  transform:translate(20px,0px)   scale(1,1.2)  ;
+  font-size:130%;
+  background-color: #b7d6e5;
+  border: 1px solid #cfcfcf;
+  font-weight:bold;
+  box-shadow:2px 1px grey;
+}
+
+.nav-item.active > span > .fa{
+  display:inline-block;
+}
+.nav-item.active span{
+  color:#00948B;
+}
+
+.nav-item.active:hover{
+  background-color: #9ec0d3;
+  transform:scale(1,1.2) translate(25px,0px);
+}
+.nav-item:hover{
+  transform:scale(1,1.2);
+  -webkit-animation-duration: 5s;
+  background-color:#B7D6E5;
+  font-style:oblique;
+}
+/****************************************************************
+    Page Content Properties. The main content in the right side.
+
+    1) Page header
+    2) page content.
+*****************************************************************/
+
+#body-content {
+  /*transform:translate(0,50%) scale(0.8) translate(0,50%);*/
+  min-height:100%;
+  padding-left: 20pt;
+  padding-right: 30pt;
+  /*padding: 10px 1px 0px;*/
+}
+#content-header {
+  font-size: 16pt;
+}
+
+#content-header i {
+  font-size: 18pt;
+}
+#content {
+  padding-top: 20px;
+  padding-bottom:20px;
+  margin-bottom:10px;
+  margin-left: 0;
+  padding-right: 5pt;
+  padding-left: 50px;
+  border: 1px solid #00948B;
+  box-shadow: 2px 3px lightgrey;
+  border-radius: 12pt;
+  height: 100%;
+  background-color:#ffffff;
+
+}
+
+
+
+
+/***************************************************************
+    Main Content In the body.
+*****************************************************************/
+.toast-message{
+
+}
+
+#content-header{
+  padding-right:30px;
+  padding-left:0!important;
+}
+#header-separtion-line{
+  margin-top: 10px;
+  margin-bottom:5px;
+  border-width:2px;
+  border-color: #00948B;
+  width: 98%;
+}
+
+.fa-times-circle{
+  color:darkred;
+}
+.fa-check-circle{
+  color:darkgreen;
+}
+.fa-times-circle:hover{
+  transform:scale(1.2);
+
+}
+.fa-check-circle:hover{
+  transform:scale(1.2);
+}
+
+#content-detail{
+  padding-left:30px;
+}
+
+.toast{
+  font-size:large;
+  color:white !important;
+}
+.toast-message{
+  font-size: large;
+  color:white !important;
+}
+.toast-title{
+  font-size:medium;
+  color:white !important;
+}

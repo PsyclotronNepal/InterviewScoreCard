@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import * as toastr from 'toastr';
+import {changeUser, pageUser, setPage} from '../Base';
+
 
 export default class Header extends Component {
     logoutUser(){
