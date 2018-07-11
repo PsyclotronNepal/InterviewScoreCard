@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
-import InterviewView from "./InterviewView";
 import axios from "axios/index";
+import InterviewerView from "./InterviewerView";
 
-export default class InterviewCard extends Component {
+export default class InterviewerCard extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -25,16 +25,12 @@ export default class InterviewCard extends Component {
     }
 
     handleEdit(event) {
-        $.ajax({
-            dataType: 'json',
-            url: '/api/interview/' + this.props['data-id'],
-            success: function (response) {
-                setPage(<InterviewView data={response}/>)
-            },
-            error: function (err) {
-                toastr['error'](" Message: " + err.responseJSON.message, "Interview Detail fetch Error [code: " + err.status + "]");
-            }
-        });
+        axios.get('/api/interviewer/' + this.props['data-id']).then(response=>{
+            setPage(<InterviewerView data={response.data}/>);
+        }).catch(errors => {
+            console.log(errors);
+            toastr['error'](" Message: " + errors.responseJSON.message, "Interviewer Detail Fetch Error [code: " + errors.status + "]");
+        })
     }
 
     render() {
@@ -55,16 +51,11 @@ export default class InterviewCard extends Component {
                 : ""
             }
             <a onClick={this.handleClick}>
+                <div className="card-body">
+                    <img className="rounded-circle card-image" src={this.props.image}/>
+                </div>
                 <div className="card-header text-primary">
                     <strong>{this.props.name}</strong>
-                </div>
-
-                <div className="card-body text-info">
-                    <div className="card-subtitle"><i className="fa fa-4x fa-calendar"/></div>
-                    {this.props.date}
-                </div>
-                <div className="card-footer">
-                    {this.props.location}
                 </div>
             </a>
         </div>

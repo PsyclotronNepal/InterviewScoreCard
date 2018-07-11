@@ -63,6 +63,7 @@ class InterviewController extends Controller
     {
         if (Auth::user()->isAdmin()) {
             $i = new Interview();
+            $i->title="Untitled Interview";
             $i->save();
             $i->error = false;
             return $i;

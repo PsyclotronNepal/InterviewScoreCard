@@ -35,7 +35,7 @@ class Role extends Eloquent
 
     static public function admins()
     {
-        //TODO
+        return Role::all()->where('name', 'interviewer');
     }
 
     static public function interviewers()

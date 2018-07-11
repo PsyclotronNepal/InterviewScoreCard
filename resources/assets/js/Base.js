@@ -1,6 +1,7 @@
 import * as toastr from 'toastr';
 
 export var appInstance=null;
+export var active=1;
 export var loggedinUser={loggedin: false};
 var pages={}
 export function addPage(name,_function){
@@ -19,6 +20,12 @@ export function changeUser(user){
 }
 export function pageUser(){
     return loggedinUser;
+}
+export function setActiveNavItem(ac){
+    active=ac;
+}
+export function getActiveNavItem(){
+    return active;
 }
 
 $.ajax({

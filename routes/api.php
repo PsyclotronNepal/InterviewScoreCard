@@ -21,6 +21,15 @@ Route::prefix('user')->group(function () {
     Route::get('/logout', 'UserController@logout');
 });
 
+Route::prefix('interviewer')->group(function () {
+    Route::get('/', 'InterviewerController@getList');
+    Route::get('/{interviewer_id}',"InterviewerController@get");
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'HrController@getList');
+    Route::get('/{admin_id}',"HrController@get");
+});
 
 Route::prefix('interview')->group(function () {
     // interview/

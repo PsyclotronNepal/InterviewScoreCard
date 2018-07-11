@@ -19,7 +19,7 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'fname', 'mname', 'lname', 'email', 'password', 'designation', 'profile_image'
+        'first_name', 'middle_name', 'last_name', 'email', 'password', 'designation', 'profile_image'
     ];
 
 
@@ -40,6 +40,7 @@ class User extends Authenticatable
         return $this->hasRole('admin');
 
     }
+
 
     public function isInterviewer()
     {

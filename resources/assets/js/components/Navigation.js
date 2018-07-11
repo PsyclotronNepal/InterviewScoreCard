@@ -1,24 +1,47 @@
 import React, {Component} from "react";
 import * as toastr from 'toastr';
-require('../Base');
+import {changeUser, pageUser, setPage, getActiveNavItem, setActiveNavItem} from '../Base';
+import Interviewers from "./Interviewers";
+import Admins from "./Admins";
+import Interviews from "./Interviews";
+
 
 export default class Navigation extends Component {
 
+    constructor(props){
+        super(props);
+        this.state ={
+            active: 1
+        };
+    }
+    handleInterviewersClick(event){
+        setPage(<Interviewers />);
+        setActiveNavItem(2);
+    }
+    handleAdminsClick(event) {
+        setPage(<Admins/>);
+        setActiveNavItem(3);
+    }
+
+    handleInterviewsClick(event){
+        setPage(<Interviews />);
+        setActiveNavItem(1);
+    }
+
+
     render() {
+        var notActive="nav-item text-center";
+        var active="nav-item active text-center"
         return <nav className="col-lg-2 col-sm-3 " id="navbar">
             <div id="nav-content">
-                <div className="nav-item active text-center"><span>
+                <div className={getActiveNavItem()==1?active:notActive} onClick={this.handleInterviewsClick}><span>
                     <i className="fa fa-map-marker"></i> Interviews</span>
                 </div>
-                <a href="interviewer-list.html">
-                    <div className="nav-item text-center"><span>
+                    <div className={getActiveNavItem()==2?active:notActive} onClick={this.handleInterviewersClick}><span>
                         <i className="fa fa-map-marker"></i> Interviewers</span>
                     </div>
-                </a>
-                <a href="admin-list.html">
-                    <div className="nav-item text-center"><span><i className="fa fa-map-marker"></i> Admin</span>
+                    <div className={getActiveNavItem()==3?active:notActive} onClick={this.handleAdminsClick}><span><i className="fa fa-map-marker"></i> Admins</span>
                     </div>
-                </a>
             </div>
         </nav>
     }
