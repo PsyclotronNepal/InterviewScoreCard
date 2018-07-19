@@ -3,6 +3,7 @@ import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
 import axios from "axios/index";
 import InterviewerView from "./InterviewerView";
+import Interviewers from "./Interviewers";
 
 export default class InterviewerCard extends Component {
     constructor(props) {
@@ -19,9 +20,12 @@ export default class InterviewerCard extends Component {
     }
 
     handleDelete(event) {
-        if (this.props.onDelete) {
-            this.props.onDelete({target: event.target, key: this.props["data-id"]});
-        }
+        axios.get('/api/interviewer/delete/' + this.props['data-id']).then(response=>{
+            setPage(<Interviewers interviewers={response.data}/>);
+        }).catch(errors => {
+            console.log(errors);
+            toastr['error'](" Message: " + errors.responseJSON.message, "Interviewer Detail Fetch Error [code: " + errors.status + "]");
+        })
     }
 
     handleEdit(event) {

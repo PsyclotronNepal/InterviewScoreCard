@@ -14,7 +14,7 @@ class AddForeignKeysToEvaluationCriteriaTable extends Migration
     public function up()
     {
         Schema::table('evaluation_criteria', function (Blueprint $table) {
-            $table->foreign('interview_id', 'fk_evaluation_criteria_interview1')->references('id')->on('interview')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('interview_id', 'fk_evaluation_criteria_interview1')->references('id')->on('interview')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

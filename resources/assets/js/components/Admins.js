@@ -34,7 +34,13 @@ export default class Admins extends Component {
     }
 
     render() {
-        const admins = this.state.admins;
+        var admins = this.state.admins;
+
+
+        if(this.props.admins){
+            admins = this.props.admins;
+        }
+
 
         return <Page user={pageUser()}>
             <Body>
@@ -60,9 +66,7 @@ export default class Admins extends Component {
                 term: $event.target.value
             }
         }).then(response=>{
-            this.setState({
-                admins: response.data
-            });
+            setPage(<Admins admins = {response.data}/>)
         }).catch(errors => {
             console.log(errors);
             toastr['error'](" Message: " + errors.responseJSON.message, "Interview Fetch Error [code: " + errors.status + "]");

@@ -19,7 +19,7 @@ export default class Interviews extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let home = this;
         $.ajax({
             dataType: "json",
@@ -40,7 +40,11 @@ export default class Interviews extends Component {
     }
 
     render() {
-        const interviews = this.state.interviews.data;
+        var interviews = this.state.interviews.data;
+        if(this.props.interviews){
+            interviews = this.props.interviews.data;
+        }
+
         return <Page user={pageUser()}>
             <Body>
             <Search onChange={this.handleSearch}/>
@@ -71,7 +75,7 @@ export default class Interviews extends Component {
                     toastr['warning'](" Message: " + result.message, "Interview Search Error");
                 }
                 else {
-                    home.setState({interviews: result});
+                    setPage(<Interviews interviews={result}/>)
                 }
             },
             error: function (err) {
@@ -84,7 +88,8 @@ export default class Interviews extends Component {
 
     }
 
-    handleInterviewDelete() {
+    handleInterviewDelete(event) {
+        console.log(event.target);
 
     }
 

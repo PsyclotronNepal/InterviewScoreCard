@@ -36,7 +36,11 @@ export default class Interviewers extends Component {
     }
 
     render() {
-        const interviewers = this.state.interviewers;
+        var interviewers = this.state.interviewers;
+
+        if(this.props.interviewers){
+            interviewers = this.props.interviewers;
+        }
 
         return <Page user={pageUser()}>
             <Body>
@@ -61,12 +65,10 @@ export default class Interviewers extends Component {
                 term: $event.target.value
             }
         }).then(response=>{
-            this.setState({
-                interviewers: response.data
-            });
-        }).catch(errors => {
+            setPage(<Interviewers interviewers = {response.data}/>)}
+        ).catch(errors => {
             console.log(errors);
-            toastr['error'](" Message: " + errors.responseJSON.message, "Admin Fetch Error [code: " + errors.status + "]");
+            toastr['error'](" Message: " + errors.responseJSON.message, "Interviewer Fetch Error [code: " + errors.status + "]");
         })
     }
 

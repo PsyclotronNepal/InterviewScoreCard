@@ -31,6 +31,16 @@ class HrController extends Controller
 
     }
 
+    function deleteHr(Request $request, $adminId){
+        $admin = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'admin');
+        })->find($adminId);
+        $admin->delete();
+
+        return $this->getList($request);
+
+    }
+
     function get(Request $request, $adminId){
         $admin = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'admin');

@@ -50,6 +50,17 @@ class InterviewController extends Controller
         return ['error' => true, "message" => "You are not assigned any roles"];
     }
 
+    function deleteInterview(Request $request, $interviewId)
+    {
+        if(Auth::user()->isAdmin()){
+            $interview = Interview::find($interviewId);
+            $interview->delete();
+
+            return $this->getList($request);
+        }
+        return ['error' => true, "message" => "You Don't have enough permission for this operation"];
+    }
+
     function get(Request $request,$interviewId)
     {
         $interview=Interview::find($interviewId);

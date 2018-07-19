@@ -48,6 +48,15 @@ class InterviewerController extends Controller
 
     }
 
+    function deleteInterviewer(Request $request, $interviewerId){
+        $interviewer = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'interviewer');
+        })->find($interviewerId);
+        $interviewer->delete();
+
+        return $this->getList($request);
+    }
+
     function selectInterviewee(){
 
     }

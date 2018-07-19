@@ -3,6 +3,7 @@ import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
 import InterviewView from "./InterviewView";
 import axios from "axios/index";
+import Interviews from "./Interviews";
 
 export default class InterviewCard extends Component {
     constructor(props) {
@@ -19,9 +20,16 @@ export default class InterviewCard extends Component {
     }
 
     handleDelete(event) {
-        if (this.props.onDelete) {
-            this.props.onDelete({target: event.target, key: this.props["data-id"]});
-        }
+        $.ajax({
+            dataType: 'json',
+            url: '/api/interview/delete/' + this.props['data-id'],
+            success: function (response) {
+                setPage(<Interviews interviews={response}/>);
+            },
+            error: function (err) {
+                toastr['error'](" Message: " + err.responseJSON.message, "Interview Delete Error [code: " + err.status + "]");
+            }
+        });
     }
 
     handleEdit(event) {

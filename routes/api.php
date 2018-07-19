@@ -24,11 +24,13 @@ Route::prefix('user')->group(function () {
 Route::prefix('interviewer')->group(function () {
     Route::get('/', 'InterviewerController@getList');
     Route::get('/{interviewer_id}',"InterviewerController@get");
+    Route::get('/delete/{interviewer_id}',"InterviewerController@deleteInterviewer");
 });
 
 Route::prefix('admin')->group(function () {
     Route::get('/', 'HrController@getList');
     Route::get('/{admin_id}',"HrController@get");
+    Route::get('/delete/{admin_id}',"HrController@deleteHr");
 });
 
 Route::prefix('interview')->group(function () {
@@ -51,6 +53,7 @@ Route::prefix('interview')->group(function () {
 
 
     Route::get('/{interview_id}',"InterviewController@get");
+    Route::get('/delete/{interview_id}',"InterviewController@deleteInterview");
 
     // interview/{interview_id}/edit
     // In: field_name : (title,date,location) -> one of these 3
