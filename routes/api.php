@@ -25,6 +25,7 @@ Route::prefix('interviewer')->group(function () {
     Route::get('/', 'InterviewerController@getList');
     Route::get('/{interviewer_id}',"InterviewerController@get");
     Route::get('/delete/{interviewer_id}',"InterviewerController@deleteInterviewer");
+    Route::get('/{interviewer_id}/edit',"InterviewerController@editInterviewer");
 });
 
 Route::prefix('admin')->group(function () {

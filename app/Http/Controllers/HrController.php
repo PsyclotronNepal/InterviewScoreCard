@@ -42,6 +42,14 @@ class HrController extends Controller
 
     }
 
+    function editHr(Request $request, $adminId){
+        $admin = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'admin');
+        })->find($adminId);
+        $admin->update(array($request->field_name => $request->value));
+
+    }
+
     function get(Request $request, $adminId){
         $admin = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'admin');
