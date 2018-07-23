@@ -25,12 +25,14 @@ Route::prefix('interviewer')->group(function () {
     Route::get('/', 'InterviewerController@getList');
     Route::get('/{interviewer_id}',"InterviewerController@get");
     Route::get('/delete/{interviewer_id}',"InterviewerController@deleteInterviewer");
+    Route::get('/{interviewer_id}/edit',"InterviewerController@editInterviewer");
 });
 
 Route::prefix('admin')->group(function () {
     Route::get('/', 'HrController@getList');
     Route::get('/{admin_id}',"HrController@get");
     Route::get('/delete/{admin_id}',"HrController@deleteHr");
+    Route::get('/{admin_id}/edit',"HrController@editHr");
 });
 
 Route::prefix('interview')->group(function () {

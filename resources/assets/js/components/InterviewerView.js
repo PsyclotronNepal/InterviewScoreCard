@@ -12,6 +12,10 @@ export default class InterviewerView extends Component {
         this.state = this.props.data;
 
         this.submitChange = this.submitChange.bind(this);
+        this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
+        this.handleMiddleNameChange = this.handleMiddleNameChange.bind(this);
+        this.handleLastNameChange = this.handleLastNameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
     }
 
     componentDidMount() {
@@ -22,19 +26,18 @@ export default class InterviewerView extends Component {
 
 
     submitChange(key, value) {
+        let newState={};
+        newState[key]=value;
+        if (value != null) {
+            this.setState(newState);
+        }
         axios.get('/api/interviewer/' + this.state.id + "/edit", {
             params: {
                 "field_name": key,
                 "value": value
             }
         }).then(response => {
-            if (response.error) {
-                toastr['warning'](response.message, "Error");
-            }
-            else {
-                current.setState({key: event.target.value});
-            }
-            }
+        }
         ).catch(errors => {
             console.log(errors);
             toastr['error'](" Message: " + errors.responseJSON.message, "Interviewer Error Updating Change [code: " + errors.status + "]");

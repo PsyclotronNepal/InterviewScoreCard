@@ -55398,6 +55398,10 @@ var InterviewerView = function (_Component) {
         _this.state = _this.props.data;
 
         _this.submitChange = _this.submitChange.bind(_this);
+        _this.handleFirstNameChange = _this.handleFirstNameChange.bind(_this);
+        _this.handleMiddleNameChange = _this.handleMiddleNameChange.bind(_this);
+        _this.handleLastNameChange = _this.handleLastNameChange.bind(_this);
+        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
         return _this;
     }
 
@@ -55407,18 +55411,17 @@ var InterviewerView = function (_Component) {
     }, {
         key: "submitChange",
         value: function submitChange(key, value) {
+            var newState = {};
+            newState[key] = value;
+            if (value != null) {
+                this.setState(newState);
+            }
             __WEBPACK_IMPORTED_MODULE_5_axios_index___default.a.get('/api/interviewer/' + this.state.id + "/edit", {
                 params: {
                     "field_name": key,
                     "value": value
                 }
-            }).then(function (response) {
-                if (response.error) {
-                    __WEBPACK_IMPORTED_MODULE_4_toastr__["warning"](response.message, "Error");
-                } else {
-                    current.setState({ key: event.target.value });
-                }
-            }).catch(function (errors) {
+            }).then(function (response) {}).catch(function (errors) {
                 console.log(errors);
                 __WEBPACK_IMPORTED_MODULE_4_toastr__["error"](" Message: " + errors.responseJSON.message, "Interviewer Error Updating Change [code: " + errors.status + "]");
             });
@@ -55806,6 +55809,10 @@ var InterviewerCard = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Page__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Base__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Body__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_toastr__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_toastr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_toastr__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios_index__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_axios_index__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55813,6 +55820,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -55828,12 +55837,36 @@ var AdminView = function (_Component) {
         var _this = _possibleConstructorReturn(this, (AdminView.__proto__ || Object.getPrototypeOf(AdminView)).call(this, props));
 
         _this.state = _this.props.data;
+
+        _this.submitChange = _this.submitChange.bind(_this);
+        _this.handleFirstNameChange = _this.handleFirstNameChange.bind(_this);
+        _this.handleMiddleNameChange = _this.handleMiddleNameChange.bind(_this);
+        _this.handleLastNameChange = _this.handleLastNameChange.bind(_this);
+        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
         return _this;
     }
 
     _createClass(AdminView, [{
         key: "componentDidMount",
         value: function componentDidMount() {}
+    }, {
+        key: "submitChange",
+        value: function submitChange(key, value) {
+            var newState = {};
+            newState[key] = value;
+            if (value != null) {
+                this.setState(newState);
+            }
+            __WEBPACK_IMPORTED_MODULE_5_axios_index___default.a.get('/api/admin/' + this.state.id + "/edit", {
+                params: {
+                    "field_name": key,
+                    "value": value
+                }
+            }).then(function (response) {}).catch(function (errors) {
+                console.log(errors);
+                __WEBPACK_IMPORTED_MODULE_4_toastr__["error"](" Message: " + errors.responseJSON.message, "Interviewer Error Updating Change [code: " + errors.status + "]");
+            });
+        }
     }, {
         key: "render",
         value: function render() {
@@ -55885,22 +55918,32 @@ var AdminView = function (_Component) {
                                     { className: "form-text", htmlFor: "input-first-name" },
                                     "First Name"
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", className: "form-control col-sm-6 col-lg-7 shifted-right ", id: "input-first-name",
-                                    placeholder: "Enter first name", value: this.state.first_name }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", className: "form-control col-sm-6 col-lg-7 shifted-right ",
+                                    id: "input-first-name",
+                                    placeholder: "Enter first name",
+                                    value: this.state.first_name,
+                                    onChange: this.handleFirstNameChange }),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "label",
                                     { className: "form-text", htmlFor: "input-middle-name" },
                                     "Middle Name"
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", className: "form-control col-sm-6 col-lg-7 shifted-right ", id: "input-middle-name",
-                                    placeholder: "Enter middle name", value: this.state.middle_name }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", className: "form-control col-sm-6 col-lg-7 shifted-right ",
+                                    id: "input-middle-name",
+                                    placeholder: "Enter middle name",
+                                    value: this.state.middle_name,
+                                    onChange: this.handleMiddleNameChange
+                                }),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "label",
                                     { className: "form-text", htmlFor: "input-last-name" },
                                     "Last Name"
                                 ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", className: "form-control col-sm-6 col-lg-7 shifted-right ", id: "input-last-name",
-                                    placeholder: "Enter last name", value: this.state.last_name })
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "text", className: "form-control col-sm-6 col-lg-7 shifted-right ",
+                                    id: "input-last-name",
+                                    placeholder: "Enter last name",
+                                    value: this.state.last_name,
+                                    onChange: this.handleLastNameChange })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "div",
@@ -55911,7 +55954,9 @@ var AdminView = function (_Component) {
                                     "Email address"
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "email", className: "form-control col-sm-6 col-lg-7 shifted-right", id: "input-email",
-                                    placeholder: "Enter email", value: this.state.email }),
+                                    placeholder: "Enter email",
+                                    value: this.state.email,
+                                    onChange: this.handleEmailChange }),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "small",
                                     { id: "emailHelp", className: "form-text text-muted shifted-right" },
@@ -55964,6 +56009,26 @@ var AdminView = function (_Component) {
                     )
                 )
             );
+        }
+    }, {
+        key: "handleMiddleNameChange",
+        value: function handleMiddleNameChange(event) {
+            this.submitChange("middle_name", event.target.value);
+        }
+    }, {
+        key: "handleLastNameChange",
+        value: function handleLastNameChange(event) {
+            this.submitChange("last_name", event.target.value);
+        }
+    }, {
+        key: "handleFirstNameChange",
+        value: function handleFirstNameChange(event) {
+            this.submitChange("first_name", event.target.value);
+        }
+    }, {
+        key: "handleEmailChange",
+        value: function handleEmailChange(event) {
+            this.submitChange("email", event.target.value);
         }
     }]);
 

@@ -57,6 +57,14 @@ class InterviewerController extends Controller
         return $this->getList($request);
     }
 
+    function editInterviewer(Request $request, $interviewerId){
+        $interviewer = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'interviewer');
+        })->find($interviewerId);
+        $interviewer->update(array($request->field_name => $request->value));
+
+    }
+
     function selectInterviewee(){
 
     }
