@@ -2,16 +2,43 @@ import React, {Component} from "react";
 import Page from "./Page";
 import {changeUser, pageUser, setPage} from '../Base';
 import Body from "./Body";
+import * as toastr from "toastr";
+import axios from "axios/index";
 
 
 export default class InterviewerView extends Component {
     constructor(props) {
         super(props)
         this.state = this.props.data;
+
+        this.submitChange = this.submitChange.bind(this);
     }
 
     componentDidMount() {
 
+    }
+
+
+
+
+    submitChange(key, value) {
+        axios.get('/api/interviewer/' + this.state.id + "/edit", {
+            params: {
+                "field_name": key,
+                "value": value
+            }
+        }).then(response => {
+            if (response.error) {
+                toastr['warning'](response.message, "Error");
+            }
+            else {
+                current.setState({key: event.target.value});
+            }
+            }
+        ).catch(errors => {
+            console.log(errors);
+            toastr['error'](" Message: " + errors.responseJSON.message, "Interviewer Error Updating Change [code: " + errors.status + "]");
+        })
     }
 
     render() {
@@ -36,18 +63,36 @@ export default class InterviewerView extends Component {
 
                     </div>
                     <div className="form-group ">
-                        <label className="form-text" htmlFor="input-name">Full Name</label>
-                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right " id="input-name"
-                               placeholder="Enter full name"></input>
+                        <label className="form-text" htmlFor="input-first-name">First Name</label>
+                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right "
+                               id="input-first-name"
+                               placeholder="Enter first name"
+                               value={this.state.first_name}
+                               onChange={this.handleFirstNameChange}></input>
+                        <label className="form-text" htmlFor="input-middle-name">Middle Name</label>
+                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right "
+                               id="input-middle-name"
+                               placeholder="Enter middle name"
+                               value={this.state.middle_name}
+                               onChange={this.handleMiddleNameChange}
+                        ></input>
+                        <label className="form-text" htmlFor="input-last-name">Last Name</label>
+                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right "
+                               id="input-last-name"
+                               placeholder="Enter last name"
+                               value={this.state.last_name}
+                               onChange={this.handleLastNameChange}></input>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="input-email">Email address</label>
                         <input type="email" className="form-control col-sm-6 col-lg-7 shifted-right" id="input-email"
-                               placeholder="Enter email"></input>
-                            <small id="emailHelp" className="form-text text-muted shifted-right">
-                                Account activation link will be sent tothisemail
-                            </small>
+                               placeholder="Enter email"
+                               value={this.state.email}
+                               onChange={this.handleEmailChange}></input>
+                        <small id="emailHelp" className="form-text text-muted shifted-right">
+                            Account activation link will be sent tothisemail
+                        </small>
                     </div>
 
                     <div className="form-group">
@@ -71,5 +116,21 @@ export default class InterviewerView extends Component {
             </Body>
         </Page>
 
+    }
+
+    handleMiddleNameChange(event) {
+        this.submitChange("middle_name", event.target.value);
+    }
+
+    handleLastNameChange(event) {
+        this.submitChange("last_name", event.target.value);
+    }
+
+    handleFirstNameChange(event) {
+        this.submitChange("first_name", event.target.value);
+    }
+
+    handleEmailChange(event){
+        this.submitChange("email", event.target.value);
     }
 }

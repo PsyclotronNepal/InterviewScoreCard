@@ -36,18 +36,24 @@ export default class AdminView extends Component {
 
                     </div>
                     <div className="form-group ">
-                        <label className="form-text" htmlFor="input-name">Full Name</label>
-                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right " id="input-name"
-                               placeholder="Enter full name"/>
+                        <label className="form-text" htmlFor="input-first-name">First Name</label>
+                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right " id="input-first-name"
+                               placeholder="Enter first name" value={this.state.first_name}></input>
+                        <label className="form-text" htmlFor="input-middle-name">Middle Name</label>
+                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right " id="input-middle-name"
+                               placeholder="Enter middle name" value={this.state.middle_name}></input>
+                        <label className="form-text" htmlFor="input-last-name">Last Name</label>
+                        <input type="text" className="form-control col-sm-6 col-lg-7 shifted-right " id="input-last-name"
+                               placeholder="Enter last name" value={this.state.last_name}></input>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="input-email">Email address</label>
                         <input type="email" className="form-control col-sm-6 col-lg-7 shifted-right" id="input-email"
-                               placeholder="Enter email"/>
-                            <small id="emailHelp" className="form-text text-muted shifted-right">
-                                Account activation link will be sent tothisemail
-                            </small>
+                               placeholder="Enter email" value={this.state.email}></input>
+                        <small id="emailHelp" className="form-text text-muted shifted-right">
+                            Account activation link will be sent tothisemail
+                        </small>
                     </div>
 
                     <div className="form-group">
