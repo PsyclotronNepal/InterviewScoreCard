@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -47,5 +48,16 @@ class HrController extends Controller
         })->find($adminId);
         return $admin;
 
+    }
+    function update(Request $request){
+        $admin=User::find($request->id);
+        if($admin->isAdmin()){
+            $admin->fill($request->all(['first_name','last_name','middle_name','email'  ]));
+            $admin->save();
+            return ["success"=>true];
+        }
+        else{
+            return  ["error" => true, "message" => "User is not an Admin"];
+        }
     }
 }

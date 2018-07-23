@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import * as toastr from 'toastr';
 import axios from 'axios';
 import {changeUser, pageUser, setPage} from '../Base';
-import Page from "./Page";
-import Body from "./Body";
-import Search from "./Search";
-import AdminList from "./AdminList";
+import Page from "../components/Page";
+import Body from "../components/Body";
+import Search from "../components/Search";
+import AdminList from "../components/AdminList";
 
 
 

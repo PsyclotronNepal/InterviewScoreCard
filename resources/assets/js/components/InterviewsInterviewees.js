@@ -13,12 +13,11 @@ export default class InterviewsInterviewees extends Component {
             <legend><strong>Interviewees</strong></legend>
             <div className="container-fluid pl-4">
 
-                <div className="row search-block input-group ">
-                    <div className="form-group col-auto form-inline">
-                        <i className="fa fa-search " style={{position: "absolute", left: 16 + "pt"}}></i>
-                        <input className="form-control padded-left-6x" title="search interviewees"/>
-                        <i className="fa fa-user-plus padded-left-2x"></i>
-                    </div>
+                <div className="search-block form-inline">
+                        <div className="form-group">
+                            <i className="fa fa-user-plus padded-left-2x fa-2x pt-2" style={{position:"absolute"}}></i>
+                            <input className="form-control padded-left-9x" title="search interviewees" placeholder="Search interviewees"/>
+                        </div>
                 </div>
 
                 <div className="row align-content-center text-center">

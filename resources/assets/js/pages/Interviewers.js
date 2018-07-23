@@ -2,26 +2,21 @@ import React, {Component} from 'react';
 import * as toastr from 'toastr';
 import axios from 'axios';
 import {changeUser, pageUser, setPage} from '../Base';
-import Page from "./Page";
-import Body from "./Body";
-import Search from "./Search";
-import InterviewerList from "./InterviewerList";
+import Page from "../components/Page";
+import Body from "../components/Body";
+import Search from "../components/Search";
+import InterviewerList from "../components/InterviewerList";
 
 
 
 export default class Interviewers extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             interviewers: []
 
-        }
-
-        // you need to bind this if the function doesn't come default to component and you need to access state
+        };
         this.handleSearch = this.handleSearch.bind(this,)
-
-        // this.handleInterviewClick = this.handleInterviewClick.bind(this);
-
     }
 
     componentDidMount() {

@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage, getActiveNavItem, setActiveNavItem} from '../Base';
-import Interviewers from "./Interviewers";
-import Admins from "./Admins";
-import Interviews from "./Interviews";
+import Interviewers from "../pages/Interviewers";
+import Admins from "../pages/Admins";
+import Interviews from "../pages/Interviews";
 
 
 export default class Navigation extends Component {

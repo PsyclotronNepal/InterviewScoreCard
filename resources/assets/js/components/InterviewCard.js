@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
-import InterviewView from "./InterviewView";
+import InterviewView from "../pages/InterviewView";
 import axios from "axios/index";
-import Interviews from "./Interviews";
+import Interviews from "../pages/Interviews";
 
 export default class InterviewCard extends Component {
     constructor(props) {

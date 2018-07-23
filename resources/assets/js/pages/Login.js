@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
-import Page from "./Page";
+import Page from "../components/Page";
 import Interviews from "./Interviews";
 
 export default class Login extends Component {
@@ -18,8 +18,7 @@ export default class Login extends Component {
 
     render() {
         return <Page user={pageUser()}>
-            return
-            <div className="row align-content-center">
+            <div className="row">
                 <form className="login-form" onSubmit={this.handleSubmit}>
                     <h1 className="text-primary text-center mb-5 pb-3">Login Required</h1>
                     <div className="form-group form-inline">

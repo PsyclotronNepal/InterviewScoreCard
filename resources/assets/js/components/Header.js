@@ -19,8 +19,8 @@ export default class Header extends Component {
                 </div>
 
                 <div className="col-10" id="header-website-info">
-                    <h1>LIS NEPAL</h1>
-                    <h1 className="text-capitalize text-right h1" id="  header-website-text">Interview Assistant</h1>
+                    <img id='logoimage' src='/images/lis logo.gif'/>
+                    <h1 className="text-capitalize text-right h1 mt-1 " id="  header-website-text">Interview Assistant</h1>
                     <a href="#" onClick={this.logoutUser} >
                         <div className="text-danger" id="option-logout">
                             Logout &nbsp;
@@ -32,9 +32,10 @@ export default class Header extends Component {
         }
         else {
             return <div className="row" id="header">
-                <div className="col-12" id="header-website-info">
-
-                    <img className='logoimage' src='/images/lis logo.gif'/>
+                <div className="col-6" id="header-website-info">
+                    <img id='logoimage' src='/images/lis logo.gif'/>
+                </div>
+                <div className="col-6">
                     <h1 className="text-capitalize text-right h1" id="header-website-text">Interview Assistant</h1>
                 </div>
             </div>

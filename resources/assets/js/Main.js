@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as toastr from 'toastr';
 import { setAppInstance, pageUser } from './Base';
-import Login from "./components/Login";
-import Interviews from "./components/Interviews";
+import Login from "./pages/Login";
+import Interviews from "./pages/Interviews";
 
 export default class Main extends Component {
     constructor(props) {
@@ -14,7 +14,6 @@ export default class Main extends Component {
         toastr.options.timeOut = 5000;
         toastr.options.fadeOut = 250;
         toastr.options.fadeIn = 250;
-
         this.state = {
             renderer: null,
             user: {loggedin: false}

@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/', 'HrController@getList');
     Route::get('/{admin_id}',"HrController@get");
     Route::get('/delete/{admin_id}',"HrController@deleteHr");
+    Route::post('/update','HrController@update');
 });
 
 Route::prefix('interview')->group(function () {

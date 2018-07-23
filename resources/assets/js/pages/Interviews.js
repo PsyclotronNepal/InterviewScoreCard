@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
-import Page from "./Page";
-import Body from "./Body";
-import Search from "./Search";
-import InterviewList from "./InterviewList";
+import Page from "../components/Page";
+import Body from "../components/Body";
+import Search from "../components/Search";
+import InterviewList from "../components/InterviewList";
 
 
 export default class Interviews extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             interviews: []
 
-        }
-        this.handleSearch = this.handleSearch.bind(this,)
+        };
+        this.handleSearch = this.handleSearch.bind(this,);
         this.handleInterviewClick = this.handleInterviewClick.bind(this);
 
     }

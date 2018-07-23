@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import Page from "./Page";
+import Page from "../components/Page";
 import {changeUser, pageUser, setPage} from '../Base';
-import Body from "./Body";
-import EventDetail from "./EventDetail";
-import EvaluationCriteria from "./EvaluationCriteria";
-import InterViewsInterviewers from "./InterViewsInterviewers";
-import InterviewsInterviewees from "./InterviewsInterviewees";
+import Body from "../components/Body";
+import EventDetail from "../components/EventDetail";
+import EvaluationCriteria from "../components/EvaluationCriteria";
+import InterViewsInterviewers from "../components/InterViewsInterviewers";
+import InterviewsInterviewees from "../components/InterviewsInterviewees";
 
 
 export default class InterviewView extends Component {

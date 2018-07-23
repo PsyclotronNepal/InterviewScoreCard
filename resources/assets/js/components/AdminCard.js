@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
 import axios from "axios/index";
-import AdminView from "./AdminView";
-import Admins from "./Admins";
+import AdminView from "../pages/AdminView";
+import Admins from "../pages/Admins";
 
 export default class InterviewerCard extends Component {
     constructor(props) {
