@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\User;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use App\Models\Interviewer;
 use Illuminate\Support\Facades\Auth;
@@ -61,8 +62,42 @@ class InterviewerController extends Controller
         $interviewer = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'interviewer');
         })->find($interviewerId);
+
+        if($request->field_name = "image"){
+            $image = $request->value;
+            $path = public_path().'images/profile/' . $interviewerId;
+            Image::make(file_get_contents($image))->save($path);
+            $interviewer->update(array("profile_image" => $path));
+
+
+        }
         $interviewer->update(array($request->field_name => $request->value));
 
+    }
+
+    function updateProfileImage(Request $request, $interviewerId){
+
+        $interviewer = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'interviewer');
+        })->find($interviewerId);
+        $image = $request->value;
+        $path = 'images/'.$interviewerId.'_'.str_random(2).'.'.$request->extension;
+        \File::put($path, base64_decode($image));
+        $interviewer->update(array("profile_image" => $path));
+
+        return ["filename"=> $path];
+    }
+
+    function update(Request $request){
+        $interviewer=User::find($request->id);
+        if($interviewer->isInterviewer()){
+            $interviewer->fill($request->all(['first_name','last_name','middle_name','email'  ]));
+            $interviewer->save();
+            return ["success"=>true];
+        }
+        else{
+            return  ["error" => true, "message" => "User is not an Interviewer"];
+        }
     }
 
     function selectInterviewee(){

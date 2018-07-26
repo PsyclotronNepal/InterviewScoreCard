@@ -5,40 +5,46 @@ import Body from "../components/Body";
 import Admins from "./Admins";
 import * as toastr from "toastr";
 import {ajax} from "jquery";
+import axios from "axios/index";
 
 
 export default class AdminView extends Component {
+
     constructor(props) {
         super(props)
         this.state = this.props.data;
 
-        this.handleBackClick=this.handleBackClick.bind(this);
-        this.handleFNameChange=this.handleFNameChange.bind(this);
-        this.handleMNameChange=this.handleMNameChange.bind(this);
-        this.handleLNameChange=this.handleLNameChange.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
-        this.handleEmailChange=this.handleEmailChange.bind(this);
+        this.handleBackClick = this.handleBackClick.bind(this);
+        this.handleFNameChange = this.handleFNameChange.bind(this);
+        this.handleMNameChange = this.handleMNameChange.bind(this);
+        this.handleLNameChange = this.handleLNameChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePictureUpload = this.handlePictureUpload.bind(this);
+        this.handleFileRead = this.handleFileRead.bind(this);
     }
 
     componentDidMount() {
 
     }
-    handleBackClick(){
+
+    handleBackClick() {
         console.log("Clicked back");
-        setPage(<Admins />)
+        setPage(<Admins/>)
     }
-    handleSubmit(){
+
+    handleSubmit() {
         ajax({
             dataType: "json",
             url: "/api/admin/update",
-            method:"post",
-            data:this.state,
+            method: "post",
+            data: this.state,
             success: function (result) {
                 if (result.error) {
                     toastr['warning'](" Message: " + result.message, "Interview Fetch Error");
                 }
                 else {
-                    toastr['success']("Data has been updated","Success");
+                    toastr['success']("Data has been updated", "Success");
                 }
             },
             error: function (err) {
@@ -48,18 +54,19 @@ export default class AdminView extends Component {
     }
 
     handleMNameChange(event) {
-        this.setState({middle_name:event.target.value});
+        this.setState({middle_name: event.target.value});
     }
 
     handleLNameChange(event) {
-        this.setState({last_name:event.target.value});
+        this.setState({last_name: event.target.value});
     }
 
     handleFNameChange(event) {
         this.setState({first_name: event.target.value});
     }
-    handleEmailChange(event){
-        this.setState({email:event.target.value});
+
+    handleEmailChange(event) {
+        this.setState({email: event.target.value});
     }
 
     render() {
@@ -78,11 +85,16 @@ export default class AdminView extends Component {
 
                     <div className="form-group row align-content-center">
                         <div className="col-5"></div>
-                        <div id="profile-image-upload" className="col-2">
-                        <i className="fa fa-user-circle fa-5x"></i>
-                        <i className="fa fa-cloud-upload-alt fa-5x"></i>
-                        <div className="text-center">Profile Picture</div>
-                        <div className="text-center"> Upload File</div>
+                        <div id="profile-image-upload" className="col-2" onClick={this.handleProfilePicClick}>
+                            <img className="fa fa-user-circle fa-5x profile-image-upload"
+                                 src={this.state.profile_image}></img>
+                            <i className="fa fa-cloud-upload-alt fa-10x"></i>
+                            <div className="text-center">Profile Picture</div>
+                            <div className="text-center">Upload Picture<input type="file" className="hidden"
+                                                                              id="profile_picture_upload"
+                                                                              accept="image/x-png,image/gif,image/jpeg"
+                                                                              onChange={this.handlePictureUpload}/>
+                            </div>
                         </div>
                     </div>
                     <div className="clearfix"></div>
@@ -90,23 +102,27 @@ export default class AdminView extends Component {
                         <label className="form-text" htmlFor="input-first-name">Full Name</label>
                         <div className="row pl-4">
                             <div className="col">
-                            <input type="text" className="form-control " id="input-first-name"
-                                   placeholder="First name" value={this.state.first_name} onChange={this.handleFNameChange}/>
+                                <input type="text" className="form-control " id="input-first-name"
+                                       placeholder="First name" value={this.state.first_name}
+                                       onChange={this.handleFNameChange}/>
                             </div>
                             <div className="col">
-                            <input type="text" className="form-control" id="input-middle-name"
-                                   placeholder="Middle name" value={this.state.middle_name} onChange={this.handleMNameChange}/>
+                                <input type="text" className="form-control" id="input-middle-name"
+                                       placeholder="Middle name" value={this.state.middle_name}
+                                       onChange={this.handleMNameChange}/>
                             </div>
                             <div className="col">
-                            <input type="text" className="form-control " id="input-last-name"
-                                   placeholder="Last Name" value={this.state.last_name} onChange={this.handleLNameChange}/>
+                                <input type="text" className="form-control " id="input-last-name"
+                                       placeholder="Last Name" value={this.state.last_name}
+                                       onChange={this.handleLNameChange}/>
                             </div>
                         </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="input-email">Email address</label>
                         <input type="email" className="form-control ml-4" id="input-email"
-                               placeholder="Enter email" value={this.state.email} onChange={this.handleEmailChange}/>
+                               placeholder="Enter email" value={this.state.email} onChange={this.handleEmailChange}
+                        />
                         <small id="emailHelp" className="form-text text-muted shifted-right">
                             Account activation link will be sent tov this email
                         </small>
@@ -131,5 +147,33 @@ export default class AdminView extends Component {
             </Body>
         </Page>
 
+    }
+
+    handleProfilePicClick(event) {
+        $("#profile_picture_upload").trigger('click');
+
+    }
+
+    handlePictureUpload(event) {
+        this.filereader = new FileReader();
+        this.filereader.onloadend = this.handleFileRead;
+        var extension = event.target.files[0].name.split('.').pop().toLowerCase();
+        this.setState({"extension": extension});
+        this.filereader.readAsBinaryString(event.target.files[0]);
+    }
+
+    handleFileRead(event) {
+        // console.log(btoa(this.filereader.result));
+        axios.post('/api/admin/' + this.state.id + "/profile_image", {
+                "field_name": "image",
+                "value": btoa(this.filereader.result),
+                "extension": this.state.extension
+        }).then(response => {
+            this.setState({"profile_image" :response.data.filename});
+            }
+        ).catch(errors => {
+            console.log(errors);
+            toastr['error'](" Message: " + errors, "Interviewer Error Updating Change [code: " + errors.status + "]");
+        })
     }
 }

@@ -68,4 +68,17 @@ class HrController extends Controller
             return  ["error" => true, "message" => "User is not an Admin"];
         }
     }
+
+    function updateProfileImage(Request $request, $adminId){
+
+        $admin = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'admin');
+        })->find($adminId);
+        $image = $request->value;
+        $path = 'images/'.$adminId.'_'.str_random(2).'.'.$request->extension;
+        \File::put($path, base64_decode($image));
+        $admin->update(array("profile_image" => $path));
+
+        return ["filename"=> $path];
+    }
 }

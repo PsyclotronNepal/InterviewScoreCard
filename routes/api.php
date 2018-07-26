@@ -26,6 +26,8 @@ Route::prefix('interviewer')->group(function () {
     Route::get('/{interviewer_id}',"InterviewerController@get");
     Route::get('/delete/{interviewer_id}',"InterviewerController@deleteInterviewer");
     Route::get('/{interviewer_id}/edit',"InterviewerController@editInterviewer");
+    Route::post('/update','InterviewerController@update');
+    Route::post('/{interviewer_id}/profile_image','InterviewerController@updateProfileImage');
 });
 
 Route::prefix('admin')->group(function () {
@@ -33,6 +35,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/{admin_id}',"HrController@get");
     Route::get('/delete/{admin_id}',"HrController@deleteHr");
     Route::post('/update','HrController@update');
+    Route::post('/{admin_id}/profile_image','HrController@updateProfileImage');
 });
 
 Route::prefix('interview')->group(function () {
