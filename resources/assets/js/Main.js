@@ -19,12 +19,13 @@ export default class Main extends Component {
             user: {loggedin: false}
         }
         if(pageUser().loggedin){
-            this.state.current_page=<Interviews/>;
+            this.state.current_page=<Interviews user={pageUser()}/>;
         }
         else{
             this.state.current_page=<Login/>;
 
         }
+
     }
 
     componentDidMount() {
@@ -37,6 +38,7 @@ export default class Main extends Component {
     changeRenderer(renderer) {
         this.setState({current_page: renderer})
     }
+
 }
 
 if (document.getElementById('react-content')) {

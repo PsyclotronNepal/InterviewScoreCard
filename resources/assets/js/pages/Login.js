@@ -67,7 +67,7 @@ export default class Login extends Component {
             success: function ($result) {
                 if ($result.loggedin) {
                     changeUser($result);
-                    setPage(<Interviews/>)
+                    setPage(<Interviews user={pageUser()}/>)
                 }
                 else {
                     toastr['warning'](" Message: " + $result.message, "Error while login");

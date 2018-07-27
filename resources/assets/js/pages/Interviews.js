@@ -5,6 +5,7 @@ import Page from "../components/Page";
 import Body from "../components/Body";
 import Search from "../components/Search";
 import InterviewList from "../components/InterviewList";
+import {ajax} from "jquery";
 
 
 export default class Interviews extends Component {
@@ -45,7 +46,7 @@ export default class Interviews extends Component {
             interviews = this.props.interviews.data;
         }
 
-        return <Page user={pageUser()}>
+        return <Page user={this.props.user}>
             <Body>
             <Search onChange={this.handleSearch}/>
             {$.inArray(pageUser().roles, "admin") ?

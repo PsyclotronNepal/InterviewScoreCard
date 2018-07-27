@@ -81,7 +81,7 @@ class InterviewerController extends Controller
             $query->where('name', '=', 'interviewer');
         })->find($interviewerId);
         $image = $request->value;
-        $path = 'images/'.$interviewerId.'_'.str_random(2).'.'.$request->extension;
+        $path = 'images/profile/'.$interviewerId.'_'.str_random(2).'.'.$request->extension;
         \File::put($path, base64_decode($image));
         $interviewer->update(array("profile_image" => $path));
 

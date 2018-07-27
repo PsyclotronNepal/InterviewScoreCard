@@ -1,20 +1,19 @@
 import React, {Component} from "react";
+import * as toastr from 'toastr';
+import {changeUser, pageUser, setPage} from "../Base";
 import Page from "../components/Page";
-import {changeUser, pageUser, setPage} from '../Base';
 import Body from "../components/Body";
-import Admins from "./Admins";
-import * as toastr from "toastr";
 import {ajax} from "jquery";
+import Interviews from "./Interviews";
 import axios from "axios/index";
 
+export default class Profile extends Component{
 
-export default class AdminView extends Component {
+    constructor(props){
+        super(props);
+        this.state = this.props.user;
 
-    constructor(props) {
-        super(props)
-        this.state = this.props.data;
 
-        this.handleBackClick = this.handleBackClick.bind(this);
         this.handleFNameChange = this.handleFNameChange.bind(this);
         this.handleMNameChange = this.handleMNameChange.bind(this);
         this.handleLNameChange = this.handleLNameChange.bind(this);
@@ -24,19 +23,11 @@ export default class AdminView extends Component {
         this.handleFileRead = this.handleFileRead.bind(this);
     }
 
-    componentDidMount() {
-
-    }
-
-    handleBackClick() {
-        console.log("Clicked back");
-        setPage(<Admins/>)
-    }
-
     handleSubmit() {
+        var context = this;
         ajax({
             dataType: "json",
-            url: "/api/admin/update",
+            url: "/api/interviewer/update",
             method: "post",
             data: this.state,
             success: function (result) {
@@ -45,6 +36,8 @@ export default class AdminView extends Component {
                 }
                 else {
                     toastr['success']("Data has been updated", "Success");
+                    changeUser(context.state);
+                    console.log(pageUser());
                 }
             },
             error: function (err) {
@@ -52,7 +45,6 @@ export default class AdminView extends Component {
             }
         });
     }
-
     handleMNameChange(event) {
         this.setState({middle_name: event.target.value});
     }
@@ -70,19 +62,17 @@ export default class AdminView extends Component {
     }
 
     render() {
-        return <Page user={pageUser()}>
+        return <Page user={this.props.user}>
             <Body>
             <div className="row h1 content-header text-center text-uppercase">
                 <div id="content-header" className="col-md-12">
-                    <i className="fa fa-times-circle float-left" onClick={this.handleBackClick}></i>
-                    Admin Edit
+                    Profile Edit
                     <i className="fa fa-check-circle float-right" onClick={this.handleSubmit}></i>
                 </div>
             </div>
             <hr id="header-separtion-line"/>
             <div id="content-detail" className="container-fluid">
-                <form id="edit-form" className="pr-5">
-
+                <form id="edit-form">
                     <div className="form-group row align-content-center">
                         <div className="col-5"></div>
                         <div id="profile-image-upload" className="col-2" onClick={this.handleProfilePicClick}>
@@ -138,16 +128,14 @@ export default class AdminView extends Component {
                     </div>
                     <div>
                         <br/>
-                        <button type="submit" className="btn btn-info mr-2">Generate Password</button>
-                        <button type="submit" className="btn btn-danger">Deactivate Account</button>
+                        <button type="submit" className="btn btn-info mr-2">Change Password</button>
                         <br/>
                     </div>
                 </form>
             </div>
             </Body>
         </Page>
-
-    }
+            }
 
     handleProfilePicClick(event) {
         $("#profile_picture_upload").trigger('click');
@@ -160,21 +148,23 @@ export default class AdminView extends Component {
         var extension = event.target.files[0].name.split('.').pop().toLowerCase();
         this.setState({"extension": extension});
         this.filereader.readAsBinaryString(event.target.files[0]);
-
     }
 
     handleFileRead(event) {
         // console.log(btoa(this.filereader.result));
-        axios.post('/api/admin/' + this.state.id + "/profile_image", {
+        axios.post('/api/interviewer/' + this.state.id + "/profile_image", {
             "field_name": "image",
             "value": btoa(this.filereader.result),
             "extension": this.state.extension
         }).then(response => {
-                this.setState({"profile_image": response.data.filename});
+                this.setState({"profile_image" :response.data.filename});
+                changeUser(this.state);
             }
         ).catch(errors => {
             console.log(errors);
             toastr['error'](" Message: " + errors, "Interviewer Error Updating Change [code: " + errors.status + "]");
         })
+
     }
-}
+
+            }
