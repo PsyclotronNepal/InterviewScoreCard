@@ -23,10 +23,10 @@ export default class InterviewView extends Component {
             <Body>
             <div id="content-detail" className="row container-fluid align-left">
                 <form className="match-parent">
-                    <EventDetail data-interview={this.state.id} date={this.state.date} location={this.state.location}
+                    <EventDetail data-interview={this.state.id} date={(this.state.date)?this.state.date.substr(0,this.state.date.indexOf(' ')):' '} location={this.state.location}
                                  title={this.state.title}/>
                     <EvaluationCriteria data-interview={this.state.id} list={this.state.evaluation_criteria}/>
-                    <InterViewsInterviewers data-interview={this.state.id} list={this.state.interviewers}/>
+                    <InterViewsInterviewers data-interview={this.state.id} list={this.state.interviewers} criterias={this.state.evaluation_criteria}/>
                     <InterviewsInterviewees data-interview={this.state.id} list={this.state.interviewees}/>
                 </form>
             </div>

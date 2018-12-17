@@ -49,6 +49,16 @@ class HrController extends Controller
         $admin->update(array($request->field_name => $request->value));
 
     }
+    function createHr(Request $request){
+        $user = new User();
+        $user->email = " ";
+        $user->password = "random1234";
+        $user->save();
+        $role = Role::where('name','like','admin')->get();
+        $user->roles()->attach($role);
+        $user->save();
+        return $this->get($request, $user->id);
+    }
 
     function get(Request $request, $adminId){
         $admin = User::whereHas('roles', function ($query) {

@@ -69,7 +69,7 @@ export default class Admins extends Component {
             setPage(<Admins admins = {response.data}/>)
         }).catch(errors => {
             console.log(errors);
-            toastr['error'](" Message: " + errors.responseJSON.message, "Interview Fetch Error [code: " + errors.status + "]");
+            toastr['error'](" Message: " + errors.responseJSON.message, "Admin Fetch Error [code: " + errors.status + "]");
         });
      }
 

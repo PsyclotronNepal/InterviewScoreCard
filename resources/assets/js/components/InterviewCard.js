@@ -24,7 +24,7 @@ export default class InterviewCard extends Component {
             dataType: 'json',
             url: '/api/interview/delete/' + this.props['data-id'],
             success: function (response) {
-                setPage(<Interviews interviews={response}/>);
+                setPage(<Interviews interviews={response} user={pageUser()}/>);
             },
             error: function (err) {
                 toastr['error'](" Message: " + err.responseJSON.message, "Interview Delete Error [code: " + err.status + "]");

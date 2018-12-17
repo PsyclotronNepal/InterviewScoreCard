@@ -41,6 +41,17 @@ class InterviewerController extends Controller
 
     }
 
+    function createInterviewer(Request $request){
+        $user = new User();
+        $user->email = " ";
+        $user->password = "random1234";
+        $user->save();
+        $role = Role::where('name','like','interviewer')->get();
+        $user->roles()->attach($role);
+        $user->save();
+        return $this->get($request, $user->id);
+    }
+
     function get(Request $request, $interviewerId){
             $interviewer = User::whereHas('roles', function ($query) {
                 $query->where('name', '=', 'interviewer');

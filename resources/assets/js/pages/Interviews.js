@@ -49,7 +49,7 @@ export default class Interviews extends Component {
         return <Page user={this.props.user}>
             <Body>
             <Search onChange={this.handleSearch}/>
-            {$.inArray(pageUser().roles, "admin") ?
+            {this.props.user.role.includes("admin") ?
                 <InterviewList interviews={interviews}
                                onClick={this.handleInterviewClick}
                                onDelete={this.handleInterviewDelete}
@@ -76,7 +76,8 @@ export default class Interviews extends Component {
                     toastr['warning'](" Message: " + result.message, "Interview Search Error");
                 }
                 else {
-                    setPage(<Interviews interviews={result}/>)
+                    setPage(<Interviews interviews={result} user={pageUser()}/>);
+
                 }
             },
             error: function (err) {

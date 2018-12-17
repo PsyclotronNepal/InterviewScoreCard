@@ -5,6 +5,7 @@ import Body from "../components/Body";
 import * as toastr from "toastr";
 import axios from "axios/index";
 import {ajax} from "jquery";
+import Interviewers from "./Interviewers";
 
 
 export default class InterviewerView extends Component {
@@ -28,7 +29,7 @@ export default class InterviewerView extends Component {
 
     handleBackClick() {
         console.log("Clicked back");
-        setPage(<Admins/>)
+        setPage(<Interviewers/>);
     }
 
     handleSubmit() {

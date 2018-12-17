@@ -11,7 +11,7 @@ export default class EventDetail extends Component {
             location: this.props.location
         };
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleLocationChange = this.handleDateChange.bind(this);
+        this.handleLocationChange = this.handleLocationChange.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.submitChange = this.submitChange.bind(this);
     }
@@ -43,14 +43,17 @@ export default class EventDetail extends Component {
     }
 
     handleTitleChange(event) {
+        this.setState({title: event.target.value});
         this.submitChange("title", event.target.value);
     }
 
-    handleLocationChange() {
+    handleLocationChange(event) {
+        this.setState({location: event.target.value});
         this.submitChange("location", event.target.value);
     }
 
-    handleDateChange() {
+    handleDateChange(event) {
+        this.setState({date: event.target.value});
         this.submitChange("date", event.target.value);
     }
 

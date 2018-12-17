@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import * as toastr from 'toastr';
 import {changeUser, pageUser, setPage} from '../Base';
 import InterviewCard from "./InterviewCard";
+import InterviewCreateCard from "./InterviewCreateCard";
 
 export default class InterviewList extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ export default class InterviewList extends Component {
                 const interviews = this.props.interviews
                 if (this.props.admin) {
                     return <div className="row align-items-center text-center">
+                        <InterviewCreateCard/>
                         {
                             interviews.map((interview) =>
                                 <InterviewCard key={interview.id} name={interview.title} location={interview.location}
@@ -46,9 +48,14 @@ export default class InterviewList extends Component {
                 }
             }
         }
-        return <div className="row align-items-center text-center">
-            <h4 className="text-center col-12 text-muted">This place is empty</h4>
-        </div>
+        if(this.props.admin){
+            return <InterviewCreateCard/>
+        }
+        else {
+            return <div className="row align-items-center text-center">
+                <h4 className="text-center col-12 text-muted">This place is empty</h4>
+            </div>
+        }
 
     }
 }

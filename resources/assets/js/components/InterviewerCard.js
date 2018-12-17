@@ -24,7 +24,7 @@ export default class InterviewerCard extends Component {
             setPage(<Interviewers interviewers={response.data}/>);
         }).catch(errors => {
             console.log(errors);
-            toastr['error'](" Message: " + errors.responseJSON.message, "Interviewer Detail Fetch Error [code: " + errors.status + "]");
+            toastr['error'](" Message: " + errors.message, "Interviewer Delete Error(see if interviewer has assigned interviews");
         })
     }
 

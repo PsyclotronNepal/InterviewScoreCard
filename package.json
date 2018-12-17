@@ -23,6 +23,7 @@
     "dependencies": {
         "ajv": "^6.5.2",
         "es6-import-validate": "0.0.10",
+        "react-select": "^2.0.0",
         "toastr": "^2.1.4"
     }
 }

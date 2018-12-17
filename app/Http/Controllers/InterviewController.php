@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\User;
 class InterviewController extends Controller
 {
     var $per_page = 10;
@@ -75,9 +75,10 @@ class InterviewController extends Controller
         if (Auth::user()->isAdmin()) {
             $i = new Interview();
             $i->title="Untitled Interview";
+            $i->date = new \DateTime('now');
             $i->save();
             $i->error = false;
-            return $i;
+            return $this->get($request, $i->id);
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
     }
@@ -138,5 +139,33 @@ class InterviewController extends Controller
             return ['error' => false];
         }
         return ['error' => true, "message" => "You Don't have enough permission for this operation"];
+    }
+
+    function addInterviewers(Request $request){
+        $interviewer = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'interviewer');
+        })->find($request->interviewer_id);
+        $interview = Interview::find($request->interview_id);
+        $evaluation = $interview->evaluationCriteria()->first();
+        $interview->interviewers()->attach($interviewer,array('evaluation_id' =>$evaluation->id));
+        $interview->save();
+        return['evaluation_id'=> $evaluation->id];
+    }
+
+    function deleteInterviewers(Request $request){
+        $interviewer = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'interviewer');
+        })->find($request->interviewer_id);
+        $interview = Interview::find($request->interview_id);
+        $interview->interviewers()->detach($interviewer);
+    }
+
+    function interviewerChangeEvaluationCriteria(Request $request){
+        $interview = Interview::find($request->interview_id);
+        $evaluation = $interview->evaluationCriteria()->find($request->evaluation_id);
+        $interviewer = $interview->interviewers()->find($request->interviewer_id);
+        $interview->interviewers()->detach($interviewer,array('evaluation_id' =>$evaluation->id));
+        $interview->interviewers()->attach($interviewer,array('evaluation_id' =>$request->new_evaluation_id));
+
     }
 }

@@ -23,15 +23,18 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('interviewer')->group(function () {
     Route::get('/', 'InterviewerController@getList');
+    Route::get('/create','InterviewerController@createInterviewer');
     Route::get('/{interviewer_id}',"InterviewerController@get");
     Route::get('/delete/{interviewer_id}',"InterviewerController@deleteInterviewer");
     Route::get('/{interviewer_id}/edit',"InterviewerController@editInterviewer");
     Route::post('/update','InterviewerController@update');
     Route::post('/{interviewer_id}/profile_image','InterviewerController@updateProfileImage');
+
 });
 
 Route::prefix('admin')->group(function () {
     Route::get('/', 'HrController@getList');
+    Route::get('/create','HrController@createHr');
     Route::get('/{admin_id}',"HrController@get");
     Route::get('/delete/{admin_id}',"HrController@deleteHr");
     Route::post('/update','HrController@update');
@@ -124,6 +127,15 @@ Route::prefix('interview')->group(function () {
         // In: File
         // Out: Success (true/false)
         Route::get('/{interviewee_id}/documents/edit', 'InterviewController@testme');
+    });
+
+
+
+
+    Route::prefix('interviewer')->group(function () {
+        Route::post('/add','InterviewController@addInterviewers');
+        Route::post('/delete','InterviewController@deleteInterviewers');
+        Route::post('/changeEvaluation', 'InterviewController@interviewerChangeEvaluationCriteria');
     });
 });
 
